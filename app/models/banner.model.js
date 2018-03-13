@@ -31,6 +31,11 @@ const BannerSchema = new mongoose.Schema({
     }
 });
 
+BannerSchema.pre("save", function(){
+    this.image = ""
+})
+
+
 const Banner = mongoose.model('banner', BannerSchema);
 
 module.exports = { Banner };

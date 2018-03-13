@@ -8,15 +8,19 @@ module.exports = {
     updateBanner,
     updateImg
 }
-//////////////////////////////
+
 function getBanner(req, res) {
-    res.send('banner get')
+    Service.getBanner()
+        .then(resutt => res.send(resutt))
+        .catch(err => res.send(err));
 }
-//////////////////////////////
+
 function getBannerByLng(req, res){
-    res.send(req.params)
+    Service.getBannerByLng(req.params.lng)
+        .then(result => res.send(result))
+        .catch(err => res.send(err));
 }
-//////////////////////////////
+
 function addBanner(req, res){
     var banner = req.body;
     Service.addBanner(banner)
@@ -27,15 +31,22 @@ function addBanner(req, res){
             res.send(_.pick(error, ['name', 'message']));
         })
 }
-/////////////////////////////
+
 function uploadBanner(req, res){
-    console.log(req.file)
+    Service.uploadBanner(req.body.id,req.file.path)
+        .then(result => res.send(result))
+        .catch(err => res.send(err));
 }
-////////////////////////////
+
 function updateBanner(req,res){
-    res.send('update banner');
+    console.log(req.params.id)
+    Service.updateBanner(req.params.id,req.body)
+        .then(result => res.send(result))
+        .catch(err => res.send(err));
 }
-////////////////////////////
+
 function updateImg(req,res){
-    res.send('update img banner');
+    Service.updateImg(req.body.id)
+        .then(result => res.send(result))
+        .catch(err => res.send(err));
 }
