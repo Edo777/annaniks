@@ -2,12 +2,12 @@ const BannerRouter = require("./routers/banner/banner.router");
 const {upload} = require("./routers/file.upload");
 
 const {
-    checkFileIsImagesMulter
+    isImage
 } = require('./middleware/middleware');
 
 class API {
     initApp(app){
-        app.use('/',upload.single('file'),checkFileIsImagesMulter)
+        app.use('/', upload.single('file'), isImage)
         app.use("/banner", BannerRouter);
     }
 }

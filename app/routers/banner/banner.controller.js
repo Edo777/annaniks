@@ -33,14 +33,14 @@ function addBanner(req, res){
 }
 
 function uploadBanner(req, res){
-    Service.uploadBanner(req.body.id,req.file.path)
+    Service.uploadBanner(req.body.id, req.file.path)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
 
 function updateBanner(req,res){
     console.log(req.params.id)
-    Service.updateBanner(req.params.id,req.body)
+    Service.updateBanner(req.params.id, req.body)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
