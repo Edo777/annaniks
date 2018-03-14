@@ -1,30 +1,30 @@
-const Service = require('./banner.service');
+const { Banner } = require("./model/banner.model");
 const _ = require("lodash");
+
 module.exports = {
-    getBanner,
-    getBannerByLng,
-    addBanner,
-    uploadBanner,
-    updateBanner,
-    updateImg,
-    deleteBanner
+    getall,
+    getByLng, 
+    create,
+    createImage,
+    update,
+    updateImg
 }
 
-function getBanner(req, res) {
-    Service.getBanner()
+function getall(req, res) {
+    Banner.findAll()
         .then(resutt => res.send(resutt))
         .catch(err => res.send(err));
 }
 
-function getBannerByLng(req, res){
-    Service.getBannerByLng(req.params.lng)
+function getByLng(req, res){
+    Banner.findByLanguage(req.params.lng)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
 
-function addBanner(req, res){
+function create(req, res){
     var banner = req.body;
-    Service.addBanner(banner)
+    Banner.create(banner)
         .then((result) => {
             res.send(_.pick(result, ['_id']));
         })
@@ -33,27 +33,25 @@ function addBanner(req, res){
         })
 }
 
-function uploadBanner(req, res){
-    Service.uploadBanner(req.body.id, req.file.path)
-        .then(result => res.send(result))
+function createImage(req, res){
+    Banner.createImageById(req.params.id, req.file)
+        .then((result) => {
+            res.send({
+                name : "ok",
+                message : "create succesful"
+            })
+        })
         .catch(err => res.send(err));
 }
 
-function updateBanner(req,res){
-    console.log(req.params.id)
-    Service.updateBanner(req.params.id, req.body)
+function update(req, res){
+    Banner.findOneAndUpdate(req.params.id, req.body)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
 
 function updateImg(req,res){
-    Service.updateImg(req.body.id)
-        .then(result => res.send(result))
-        .catch(err => res.send(err));
-}
-
-function deleteBanner(req,res){
-    Service.deleteBanner(req.params.id)
+    Banner.updateImg(req.body.id)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }

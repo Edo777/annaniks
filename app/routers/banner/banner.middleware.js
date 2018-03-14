@@ -1,23 +1,28 @@
 const ObjectId = require('mongodb').ObjectID;
+const { Banner } = require('./model/banner.model');
+
 module.exports = {
-    checkUploadImg,
-    checkId,
-}
-
-function checkUploadImg(err, req, res, next) {
-
+    checkId
 }
 
 function checkId(req, res, next) {
-    /*try {
-        ObjectId(req.params.id)
-        next()
-    } catch (err) {
-        res.status(404).send('not found');
-    }*/
-    if(ObjectId.isValid(req.params.id)){
-        next()
+    let id = req.body.id || req.params.id
+    if(ObjectId.isValid(id)){
+        Banner.findById(id)
+            .then((result)=>{
+                if(result){
+                    next();
+                }else{
+                    res.status(404).send({
+                        name : "idError",
+                        message : "id is not defined"
+                    });  
+                }
+            })
     }else{
-        res.status(404).send('not found');
+        res.status(404).send({
+            name : "idError",
+            message : "Is not valid id, it must be 24 characters"
+        });
     }
 }

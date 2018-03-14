@@ -48,7 +48,7 @@
         "tags": [
           "Banners"
         ],
-        "description": "Gets all banners this language isActive true",
+        "description": "Gets all banners this language",
         "operationId": "localhost:4000/banners/:languge",
         "produces": [
           "application/json"
