@@ -1,8 +1,16 @@
 const multer  = require('multer');
 const path = require('path');
+const { Banner } = require("../routers/banner/model/banner.model")
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, __dirname + '/banner/imgs')
+      Banner.findById(req.params.id)
+        .then((result) => {
+            console.log(req.params.id)
+            if(!result){
+                return cb(new Error())
+            }
+            cb(null, path.join(__dirname, 'banner', 'imgs'))
+        })      
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now() + '.jpg')
