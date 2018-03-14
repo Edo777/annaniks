@@ -6,7 +6,8 @@ module.exports = {
     addBanner,
     uploadBanner,
     updateBanner,
-    updateImg
+    updateImg,
+    deleteBanner
 }
 
 function getBanner(req, res) {
@@ -47,6 +48,12 @@ function updateBanner(req,res){
 
 function updateImg(req,res){
     Service.updateImg(req.body.id)
+        .then(result => res.send(result))
+        .catch(err => res.send(err));
+}
+
+function deleteBanner(req,res){
+    Service.deleteBanner(req.params.id)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }

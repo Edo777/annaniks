@@ -1,24 +1,29 @@
 const router = require("express").Router();
 const upload = require("../file.upload")
+
 const { 
     getBanner,
     getBannerByLng,
     addBanner,
     uploadBanner,
     updateBanner,
-    updateImg
+    updateImg,
+    deleteBanner
 } = require('./banner.controller');
+
 const {
     checkUploadImg,
     checkId
 } = require("./banner.middleware");
-module.exports = router;
+
 
 router.get('/',               getBanner);
 router.post('/add',           addBanner);
-router.get('/@:lng',          getBannerByLng);
 router.post('/upload',        uploadBanner);
-router.delete('/@:id',        checkId, updateImg);
-router.put('/update/:id',     checkId, updateBanner);
+router.get('/@:lng',          getBannerByLng);
 router.put('/updateimg/:id',  checkId, updateImg);
+router.put('/update/:id',     checkId, updateBanner);
+router.delete('/@:id',        checkId, deleteBanner);
 //router.use(checkUploadImg);
+
+module.exports = router;

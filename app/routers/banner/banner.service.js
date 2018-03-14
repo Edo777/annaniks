@@ -24,6 +24,10 @@ class BannerService{
     updateImg(id,path){
         return Banner.findByIdAndUpdate({_id : id },{$set :{image : path}});
     }
+
+    deleteBanner(id){
+        return Banner.remove({_id:id});
+    }
 }
 
 module.exports = new BannerService();
