@@ -17,7 +17,7 @@ const {
 } = require("./banner.middleware");
 
 module.exports = router;
-router.use('/create/image/:id', upload.single('file'), isImage)
+router.use('/create/image/:id', upload.single('file'),checkId, isImage)
 router.get('/',                          getall);
 router.post('/create',                   create);
 router.get('/@:lng',                     getByLng);

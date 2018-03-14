@@ -35,10 +35,12 @@ function create(req, res){
 
 function createImage(req, res){
     Banner.createImageById(req.params.id, req.file)
-        .then(result => res.send({
-            name : "ok",
-            message : "created success"
-        }))
+        .then((result) => {
+            res.send({
+                name : "ok",
+                message : "create succesful"
+            })
+        })
         .catch(err => res.send(err));
 }
 

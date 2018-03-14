@@ -29,13 +29,17 @@ const createImageById = function(bannerId, image){
                     message : "Can not get it banner"
                 })
             }
-            return Banner.findOneAndUpdate({ _id : bannerId }, {$set : {image : path}}, (err, result) =>{
-                if(result.image){
-                    fs.unlinkSync(result.image);
-                }else{
-                    console.log("this is 1");
-                }
-            });
+            return Banner.findOneAndUpdate({ _id : bannerId }, {$set : {image : path}})
+                .then((result) => {
+                    if(result.image){
+                        fs.unlinkSync(result.image);
+                    }else{
+                        console.log("this is 1");
+                    }
+                })
+                .catch((err) => {
+
+                })
         })
         .catch((err) => {
             return Promise.reject({
