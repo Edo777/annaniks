@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors=require('cors');
 //dev dependencies
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 const URL = "mongodb://localhost:27017/Annaniks_DB";
 const morgan = require("morgan");
 const app = express();

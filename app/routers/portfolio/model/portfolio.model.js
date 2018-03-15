@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const _ = require("lodash");
+// const URL = "mongodb://localhost:27017/Annaniks_DB";
+// mongoose.connect(URL);
 const Schema = mongoose.Schema;
 
 const PortfolioSchema = new Schema({
@@ -31,14 +33,20 @@ const PortfolioSchema = new Schema({
         type : Schema.ObjectId,
         required : false
     }],
-    platform : {
-        type : Array,
+    platform : [{
+        type : Schema.ObjectId,
         required : false
-    },
-    gallery : {
-        type : Array,
-        required : false
-    },
+    }],
+    gallery : [{
+        image : {
+            type :Array,
+            require:true
+        },
+        isActive : {
+            type : Boolean,
+            require:true
+        }
+    }],
     image : {
         type: String,
     }
@@ -46,8 +54,31 @@ const PortfolioSchema = new Schema({
 
 PortfolioSchema.pre("save", function(){
     this.image = ""
+    this.gallery = []
 })
 
+const {
+    findByLanguage,
+    findAll,
+    createImageById
+} = require("./portfolioDB.statics");
+
+PortfolioSchema.statics.findByLanguage = findByLanguage;
+PortfolioSchema.statics.findAll = findAll;
+PortfolioSchema.statics.createImageById = createImageById;
 const Portfolio = mongoose.model('portfolio', PortfolioSchema);
 
+
+// Portfolio.create({
+//     title : "sdkm",
+//     description : "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+//     language : "arm",
+//     isActive : true,
+//     tags : ['5aaab95ff7051910f96e5659'],
+//     platform : ['5aaab95ff7051910f96e5659'],
+//     gallery : [{
+//         image:"dfg",
+//         isActive : true
+//     }]
+// })
 module.exports = { Portfolio };
