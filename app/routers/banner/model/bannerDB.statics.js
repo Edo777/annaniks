@@ -18,7 +18,7 @@ const createImageById = function (bannerId, image) {
             message: "file is not send"
         });
     }
-    let path = image.path;
+    let path = image.filename;
     let Banner = this;
 
     return Banner.findById(bannerId)

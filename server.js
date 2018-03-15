@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
+const cors=require('cors');
 //dev dependencies
 const PORT = process.env.PORT || 4000;
 const URL = "mongodb://localhost:27017/Annaniks_DB";
@@ -10,6 +10,7 @@ const app = express();
 const API = require("./app").API;
 mongoose.connect(URL)
     .then( () => {
+        app.use(cors());
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended : true}));
         app.use(morgan("dev"));
