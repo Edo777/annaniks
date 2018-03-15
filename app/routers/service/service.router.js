@@ -13,11 +13,11 @@ const {
     update,
     updateImg,
     remove
-} = require('./banner.controller');
+} = require('./service.controller');
 
 const {
     checkId
-} = require("./banner.middleware");
+} = require("./service.middleware");
 
 module.exports = router;
 // router.use('/create/image/:id',checkId, upload.single('file'), isImage)

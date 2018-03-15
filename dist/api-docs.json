@@ -68,7 +68,7 @@
         }
       }
     },
-    "/banner/add": {
+    "/banner/create": {
       "post": {
         "tags": [
           "Banners"
@@ -99,7 +99,7 @@
         }
       }
     },
-    "/banner/upload": {
+    "/banner/create/image/{id}": {
       "post": {
         "x-swagger-router-controller": "images",
         "operationId": "localhost:4000/banners/add/file",
@@ -175,7 +175,7 @@
         }
       }
     },
-    "/banner/updateFile/img": {
+    "/banner/updateimg/{id}": {
       "put": {
         "x-swagger-router-controller": "images",
         "operationId": "localhost:4000/banners/file",
@@ -220,7 +220,7 @@
         }
       }
     },
-    "/banner/@{id}": {
+    "/banner/delete/id}": {
       "delete": {
         "tags": [
           "Banners"
@@ -271,7 +271,7 @@
         }
       }
     },
-    "/service/{languege}": {
+    "/service/@{languege}": {
       "get": {
         "tags": [
           "Service"
@@ -296,7 +296,7 @@
         }
       }
     },
-    "/service/add": {
+    "/service/create": {
       "post": {
         "tags": [
           "Service"
@@ -327,7 +327,7 @@
         }
       }
     },
-    "/service/add/file": {
+    "/service/create/image/{id}": {
       "post": {
         "x-swagger-router-controller": "images",
         "operationId": "localhost:4000/service/add/file",
@@ -372,7 +372,7 @@
         }
       }
     },
-    "/service/object": {
+    "/service/update/{id}": {
       "put": {
         "tags": [
           "Service"
@@ -403,7 +403,7 @@
         }
       }
     },
-    "/service/file": {
+    "/service/updateimg/{id}": {
       "put": {
         "x-swagger-router-controller": "images",
         "operationId": "localhost:4000/service/file",
@@ -448,7 +448,7 @@
         }
       }
     },
-    "/service/remove": {
+    "/service/delete/{id}": {
       "delete": {
         "tags": [
           "Service"
