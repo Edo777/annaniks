@@ -7,7 +7,6 @@ module.exports = {
     create,
     createImage,
     update,
-    updateImg,
     remove
 }
 
@@ -46,19 +45,14 @@ function createImage(req, res){
 }
 
 function update(req, res){
-    Portfolio.findOneAndUpdate(req.params.id, req.body)
-        .then(result => res.send(result))
-        .catch(err => res.send(err));
-}
-
-function updateImg(req,res){
-    Portfolio.updateImg(req.body.id)
+    Portfolio.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
 
 function remove(req,res){
-    Portfolio.deleteOne(req.params.id)
+    console.log('66666666')
+    Portfolio.remove(req.params.id)
         .then((result)=>res.status(200).send(result))
         .catch((err)=>res.send(err));   
 }

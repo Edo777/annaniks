@@ -46,7 +46,7 @@ function createImage(req, res){
 }
 
 function update(req, res){
-    Service.findOneAndUpdate(req.params.id, req.body)
+    Service.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
@@ -58,7 +58,7 @@ function updateImg(req,res){
 }
 
 function remove(req,res){
-    Service.deleteOne(req.params.id)
+    Service.remove({_id:req.params.id})
         .then((result)=>res.status(200).send(result))
         .catch((err)=>res.send(err));   
 }

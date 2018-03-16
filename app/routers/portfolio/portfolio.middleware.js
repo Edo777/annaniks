@@ -8,7 +8,7 @@ module.exports = {
 function checkId(req, res, next) {
     let id = req.body.id || req.params.id
     if(ObjectId.isValid(id)){
-        Poertfolio.findById(id)
+        Poertfolio.findById({_id:id})
             .then((result)=>{
                 if(result){
                     next();

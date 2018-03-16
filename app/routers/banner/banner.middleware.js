@@ -6,9 +6,9 @@ module.exports = {
 }
 
 function checkId(req, res, next) {
-    let id = req.body.id || req.params.id
+    let id = req.body.id || req.params.id;
     if(ObjectId.isValid(id)){
-        Banner.findById(id)
+        Banner.findById({_id:id})
             .then((result)=>{
                 if(result){
                     next();

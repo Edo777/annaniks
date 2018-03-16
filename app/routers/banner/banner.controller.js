@@ -46,7 +46,7 @@ function createImage(req, res){
 }
 
 function update(req, res){
-    Banner.findOneAndUpdate(req.params.id, req.body)
+    Banner.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
@@ -58,7 +58,8 @@ function updateImg(req,res){
 }
 
 function remove(req,res){
-    Banner.deleteOne(req.params.id)
+    console.log(req.params.id)
+    Banner.remove({_id:req.params.id})
         .then((result)=>res.status(200).send(result))
         .catch((err)=>res.send(err));   
 }
