@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const _ = require("lodash");
+const TagsModel = require("../../tags/model/tags.model")
 const Schema = mongoose.Schema;
 
 const PortfolioSchema = new Schema({
@@ -31,13 +32,18 @@ const PortfolioSchema = new Schema({
         type : Schema.ObjectId,
         required : false,
         validate : {
-            validator : function(){
-
+            validator : function(id){
+                return TagsModel.findById(id).then((result) => {
+                    if(result){
+                        return true
+                    }
+                    return false
+                })
             },
             message : "id must be tags idi"
         }
     }],
-    platform : [{
+    platforms : [{
         type : Schema.ObjectId,
         required : false,
         validate : {
@@ -48,7 +54,7 @@ const PortfolioSchema = new Schema({
         }
     }],
     gallery : [{
-        image : {
+        images : {
             type :Array,
             require:true
         },
@@ -72,6 +78,7 @@ const {
     findAll,
     createImageById
 } = require("./portfolioDB.statics");
+
 
 PortfolioSchema.statics.findByLanguage = findByLanguage;
 PortfolioSchema.statics.findAll = findAll;

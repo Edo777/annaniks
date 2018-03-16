@@ -1,8 +1,9 @@
 const fs = require("fs");
+const PATH = require("path");
 
 const findByLanguage = function (lng) {
     let Banner = this;
-    return Banner.findOne({ language: lng, isActive: true });
+    return Banner.find({ language: lng, isActive: true });
 };
 
 const findAll = function (lng) {
@@ -32,13 +33,13 @@ const createImageById = function (bannerId, image) {
             return Banner.findOneAndUpdate({ _id: bannerId }, { $set: { image: path } })
                 .then((result) => {
                     if (result.image) {
-                        fs.unlinkSync(result.image);
+                        fs.unlinkSync(PATH.join(__dirname, '..', '..','static', 'imgs', result.image));
                     } else {
                         console.log("this is 1");
                     }
                 })
                 .catch((err) => {
-
+                    console.log("file not")
                 })
         })
         .catch((err) => {

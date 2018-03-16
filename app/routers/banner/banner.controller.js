@@ -46,12 +46,22 @@ function createImage(req, res){
 
 function update(req, res){
     Banner.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
+<<<<<<< HEAD
         .then(result => res.send(result))
+=======
+        .then(result => res.send({
+            name : "ok",
+            message : "Update Successfully"
+        }))
+>>>>>>> master
         .catch(err => res.send(err));
 }
 
 function remove(req,res){
     Banner.remove({_id:req.params.id})
-        .then((result)=>res.status(200).send(result))
+        .then((result)=>res.status(200).send({
+            name : "ok",
+            mesage : "Deleted successfully"
+        }))
         .catch((err)=>res.send(err));   
 }

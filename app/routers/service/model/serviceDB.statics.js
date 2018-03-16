@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const findByLanguage = function (lng) {
     let Service = this;
-    return Service.findOne({ language: lng, isActive: true });
+    return Service.find({ language: lng, isActive: true });
 };
 
 const findAll = function (lng) {
@@ -32,7 +32,7 @@ const createImageById = function (serviceId, image) {
             return Service.findOneAndUpdate({ _id: serviceId }, { $set: { image: path } })
                 .then((result) => {
                     if (result.image) {
-                        fs.unlinkSync(result.image);
+                        fs.unlinkSync(PATH.join(__dirname, '..', '..','static', 'imgs', result.image));
                     } else {
                         console.log("this is 1");
                     }
