@@ -1,5 +1,5 @@
 const ObjectId = require('mongodb').ObjectID;
-const { Banner } = require('./model/');
+const { Service } = require('./model/');
 
 module.exports = {
     checkId
@@ -8,7 +8,7 @@ module.exports = {
 function checkId(req, res, next) {
     let id = req.body.id || req.params.id
     if(ObjectId.isValid(id)){
-        Banner.findById(id)
+        Service.findById(id)
             .then((result)=>{
                 if(result){
                     next();

@@ -1,4 +1,4 @@
-const { Banner } = require("./model");
+const { Service } = require("./model");
 const _ = require("lodash");
 
 module.exports = {
@@ -12,20 +12,20 @@ module.exports = {
 }
 
 function getall(req, res) {
-    Banner.findAll()
+    Service.findAll()
         .then(resutt => res.status(200).send(resutt))
         .catch(err => res.send(err));
 }
 
 function getByLng(req, res){
-    Banner.findByLanguage(req.params.lng)
+    Service.findByLanguage(req.params.lng)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
 
 function create(req, res){
-    var banner = req.body;
-    Banner.create(banner)
+    var service = req.body;
+    Service.create(service)
         .then((result) => {
             res.send(_.pick(result, ['_id']));
         })
@@ -35,7 +35,7 @@ function create(req, res){
 }
 
 function createImage(req, res){
-    Banner.createImageById(req.params.id, req.file)
+    Service.createImageById(req.params.id, req.file)
         .then((result) => {
             res.send({
                 name : "ok",
@@ -46,19 +46,19 @@ function createImage(req, res){
 }
 
 function update(req, res){
-    Banner.findOneAndUpdate(req.params.id, req.body)
+    Service.findOneAndUpdate(req.params.id, req.body)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
 
 function updateImg(req,res){
-    Banner.updateImg(req.body.id)
+    Service.updateImg(req.body.id)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
 
 function remove(req,res){
-    Banner.deleteOne(req.params.id)
+    Service.deleteOne(req.params.id)
         .then((result)=>res.status(200).send(result))
         .catch((err)=>res.send(err));   
 }

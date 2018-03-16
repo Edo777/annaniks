@@ -13,11 +13,11 @@ const {
     update,
     updateImg,
     remove
-} = require('./banner.controller');
+} = require('./service.controller');
 
 const {
     checkId
-} = require("./banner.middleware");
+} = require("./service.middleware");
 
 module.exports = router;
 // router.use('/create/image/:id',checkId, upload.single('file'), isImage)
@@ -26,6 +26,6 @@ router.post('/create',                   create);
 router.get('/@:lng',                     getByLng);
 router.delete('/delete/:id' ,            checkId,remove);
 router.put('/update/:id',                checkId, update);
-router.put('/updateimg/:id',             checkId, upload.single('file'), isImage, createImage);
-router.post('/create/image/:id',         checkId, upload.single('file'), isImage, createImage);
+router.put('/updateimg/:id',             checkId,upload.single('file'), isImage,createImage);
+router.post('/create/image/:id',         checkId,upload.single('file'), isImage,createImage);
 //router.use(checkUploadImg);

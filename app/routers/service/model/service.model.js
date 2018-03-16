@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const BannerSchema = new mongoose.Schema({
+const ServiceSchema = new mongoose.Schema({
     title : {
         type : String,
         minlength : 1,
@@ -31,22 +31,22 @@ const BannerSchema = new mongoose.Schema({
     }
 });
 
-BannerSchema.pre("save", function(){
+ServiceSchema.pre("save", function(){
     this.image = ""
 })
 
 const {
     findByLanguage,
     findAll,
-    createBanner,
+    createService,
     createImageById
-} = require("./bannerDB.statics");
+} = require("./serviceDB.statics");
 
-BannerSchema.statics.findByLanguage = findByLanguage;
-BannerSchema.statics.findAll = findAll;
-BannerSchema.statics.createBanner = createBanner;
-BannerSchema.statics.createImageById = createImageById;
+ServiceSchema.statics.findByLanguage = findByLanguage;
+ServiceSchema.statics.findAll = findAll;
+ServiceSchema.statics.createService = createService;
+ServiceSchema.statics.createImageById = createImageById;
 
-const Banner = mongoose.model('banner', BannerSchema);
+const Service = mongoose.model('service', ServiceSchema);
 
-module.exports =  Banner ;
+module.exports =  Service ;
