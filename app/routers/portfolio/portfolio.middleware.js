@@ -1,5 +1,5 @@
 const ObjectId = require('mongodb').ObjectID;
-const { Poertfolio } = require('./model/');
+const { Portfolio } = require('./model/');
 
 module.exports = {
     checkId
@@ -8,7 +8,7 @@ module.exports = {
 function checkId(req, res, next) {
     let id = req.body.id || req.params.id
     if(ObjectId.isValid(id)){
-        Poertfolio.findById({_id:id})
+        Portfolio.findById({_id:id})
             .then((result)=>{
                 if(result){
                     next();

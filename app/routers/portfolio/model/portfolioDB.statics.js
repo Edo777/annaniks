@@ -5,7 +5,7 @@ const findByLanguage = function (lng) {
     return Portfolio.findOne({ language: lng, isActive: true });
 };
 
-const findAll = function (lng) {
+const findAll = function () {
     let Portfolio = this;
     return Portfolio.find();
 };
@@ -21,7 +21,7 @@ const createImageById = function (portfolioId, image) {
     let path = image.filename;
     let Portfolio = this;
 
-    return Portfolio.findById(portfolioId)
+    return Portfolio.findById({_id:portfolioId})
         .then((result) => {
             if (!result) {
                 return Promise.reject({

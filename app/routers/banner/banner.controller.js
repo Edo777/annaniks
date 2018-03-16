@@ -7,7 +7,6 @@ module.exports = {
     create,
     createImage,
     update,
-    updateImg,
     remove
 }
 
@@ -51,14 +50,7 @@ function update(req, res){
         .catch(err => res.send(err));
 }
 
-function updateImg(req,res){
-    Banner.updateImg(req.body.id)
-        .then(result => res.send(result))
-        .catch(err => res.send(err));
-}
-
 function remove(req,res){
-    console.log(req.params.id)
     Banner.remove({_id:req.params.id})
         .then((result)=>res.status(200).send(result))
         .catch((err)=>res.send(err));   

@@ -51,8 +51,7 @@ function update(req, res){
 }
 
 function remove(req,res){
-    console.log('66666666')
-    Portfolio.remove(req.params.id)
+    Portfolio.remove({_id:req.params.id})
         .then((result)=>res.status(200).send(result))
         .catch((err)=>res.send(err));   
 }

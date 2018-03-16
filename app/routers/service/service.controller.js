@@ -7,7 +7,6 @@ module.exports = {
     create,
     createImage,
     update,
-    updateImg,
     remove
 }
 
@@ -47,12 +46,6 @@ function createImage(req, res){
 
 function update(req, res){
     Service.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
-        .then(result => res.send(result))
-        .catch(err => res.send(err));
-}
-
-function updateImg(req,res){
-    Service.updateImg(req.body.id)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
