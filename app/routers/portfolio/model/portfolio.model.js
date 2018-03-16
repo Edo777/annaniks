@@ -1,36 +1,23 @@
 const mongoose = require("mongoose");
+const _ = require("lodash");
+const TagsModel = require("../../tags/model/tags.model")
+const Schema = mongoose.Schema;
 
-const PoerfolioSchema = new mongoose.Schema({
+const PortfolioSchema = new Schema({
     title : {
-        type : String,
-        minlength : 1,
-        trim : true,
-        required:true
+        type: String,
+        required: true,
+        minlength: 3
     },
     description : {
-        type : String,
-        minlength : 1,
-        trim : true,
-        required: true
+        type :String,
+        required : true,
+        minlength : 20
     },
     isActive : {
         type : Boolean,
-        default : false
+        required : true
     },
-    tags : [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: Feature,
-            required: true,
-            validate: [notEmpty, 'Please add at least one feature in the features array'] 
-        }
-    ],
-    platform : [
-
-    ],
-    gallery :[
-
-    ],
     language : {
         type : String,
         validate : {
@@ -38,32 +25,64 @@ const PoerfolioSchema = new mongoose.Schema({
                 return ((lng.toLowerCase() == 'armenian') || (lng.toLowerCase() == 'russian') || (lng.toLowerCase() == 'england'));
             },
             message : "Language must be Correct..."
-        }
+        },
+        required : true
     },
+    tags : [{
+        type : Schema.ObjectId,
+        required : false,
+        validate : {
+            validator : function(id){
+                return TagsModel.findById(id).then((result) => {
+                    if(result){
+                        return true
+                    }
+                    return false
+                })
+            },
+            message : "id must be tags idi"
+        }
+    }],
+    platforms : [{
+        type : Schema.ObjectId,
+        required : false,
+        validate : {
+            validator : function(){
+
+            },
+            message : "id must be platform idi"
+        }
+    }],
+    gallery : [{
+        images : {
+            type :Array,
+            require:true
+        },
+        isActive : {
+            type : Boolean,
+            require:true
+        }
+    }],
     image : {
-        type: String
+        type: String,
     }
 });
 
-PoerfolioSchema.pre("save", function(){
+PortfolioSchema.pre("save", function(){
     this.image = ""
+    this.gallery = []
 })
 
-// const {
-//     findByLanguage,
-//     findAll,
-//     createPortfolio,
-//     createImageById
-// } = require("./bannerDB.statics");
+const {
+    findByLanguage,
+    findAll,
+    createImageById
+} = require("./portfolioDB.statics");
 
-// PoerfolioSchema.statics.findByLanguage = findByLanguage;
-// PoerfolioSchema.statics.findAll = findAll;
-// PoerfolioSchema.statics.createPortfolio = createPortfolio;
-// PoerfolioSchema.statics.createImageById = createImageById;
 
-const Banner = mongoose.model('portfolio', PoerfolioSchema);
+PortfolioSchema.statics.findByLanguage = findByLanguage;
+PortfolioSchema.statics.findAll = findAll;
+PortfolioSchema.statics.createImageById = createImageById;
+const Portfolio = mongoose.model('portfolio', PortfolioSchema);
 
-Banner.create({
-    lasj :"dfg"
-})
-// module.exports =  Banner ;
+module.exports =  Portfolio ;

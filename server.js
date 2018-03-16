@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
 //dev dependencies
 const PORT = process.env.PORT || 3000;
 const URL = "mongodb://localhost:27017/Annaniks_DB";

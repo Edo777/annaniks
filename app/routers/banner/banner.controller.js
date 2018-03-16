@@ -7,7 +7,6 @@ module.exports = {
     create,
     createImage,
     update,
-    updateImg,
     remove
 }
 
@@ -46,19 +45,19 @@ function createImage(req, res){
 }
 
 function update(req, res){
-    Banner.findOneAndUpdate(req.params.id, req.body)
-        .then(result => res.send(result))
-        .catch(err => res.send(err));
-}
-
-function updateImg(req,res){
-    Banner.updateImg(req.body.id)
-        .then(result => res.send(result))
+    Banner.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
+        .then(result => res.send({
+            name : "ok",
+            message : "Update Successfully"
+        }))
         .catch(err => res.send(err));
 }
 
 function remove(req,res){
-    Banner.deleteOne(req.params.id)
-        .then((result)=>res.status(200).send(result))
+    Banner.remove({_id:req.params.id})
+        .then((result)=>res.status(200).send({
+            name : "ok",
+            mesage : "Deleted successfully"
+        }))
         .catch((err)=>res.send(err));   
 }

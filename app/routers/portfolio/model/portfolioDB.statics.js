@@ -1,17 +1,17 @@
 const fs = require("fs");
 
 const findByLanguage = function (lng) {
-    let Service = this;
-    return Service.find({ language: lng, isActive: true });
+    let Portfolio = this;
+    return Portfolio.findOne({ language: lng, isActive: true });
 };
 
-const findAll = function (lng) {
-    let Service = this;
-    return Service.find();
+const findAll = function () {
+    let Portfolio = this;
+    return Portfolio.find();
 };
 
-const createImageById = function (serviceId, image) {
-    console.log(image.filename)
+const createImageById = function (portfolioId, image) {
+    //console.log(image)
     if (!image) {
         return Promise.reject({
             name: "uploadError",
@@ -19,20 +19,20 @@ const createImageById = function (serviceId, image) {
         });
     }
     let path = image.filename;
-    let Service = this;
+    let Portfolio = this;
 
-    return Service.findById(serviceId)
+    return Portfolio.findById({_id:portfolioId})
         .then((result) => {
             if (!result) {
                 return Promise.reject({
                     name: "searchError",
-                    message: "Can not get it service"
+                    message: "Can not get it portfolio"
                 })
             }
-            return Service.findOneAndUpdate({ _id: serviceId }, { $set: { image: path } })
+            return Portfolio.findOneAndUpdate({ _id: portfolioId }, { $set: { image: path } })
                 .then((result) => {
                     if (result.image) {
-                        fs.unlinkSync(PATH.join(__dirname, '..', '..','static', 'imgs', result.image));
+                        fs.unlinkSync(result.image);
                     } else {
                         console.log("this is 1");
                     }
@@ -44,7 +44,7 @@ const createImageById = function (serviceId, image) {
         .catch((err) => {
             return Promise.reject({
                 name: "searchError",
-                message: "Can not get it service"
+                message: "Can not get it portfolio"
             })
         })
 };

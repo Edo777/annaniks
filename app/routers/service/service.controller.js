@@ -7,7 +7,6 @@ module.exports = {
     create,
     createImage,
     update,
-    updateImg,
     remove
 }
 
@@ -46,19 +45,16 @@ function createImage(req, res){
 }
 
 function update(req, res){
-    Service.findOneAndUpdate(req.params.id, req.body)
-        .then(result => res.send(result))
-        .catch(err => res.send(err));
-}
-
-function updateImg(req,res){
-    Service.updateImg(req.body.id)
-        .then(result => res.send(result))
+    Service.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
+        .then(result => res.send({
+            name : "ok",
+            message : "Update Succesfully"
+        }))
         .catch(err => res.send(err));
 }
 
 function remove(req,res){
-    Service.deleteOne(req.params.id)
-        .then((result)=>res.status(200).send(result))
+    Service.remove({_id:req.params.id})
+        .then((result)=>res.send(result))
         .catch((err)=>res.send(err));   
 }
