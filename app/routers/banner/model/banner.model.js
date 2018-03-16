@@ -46,6 +46,11 @@ BannerSchema.statics.findByLanguage = findByLanguage;
 BannerSchema.statics.findAll = findAll;
 BannerSchema.statics.createBanner = createBanner;
 BannerSchema.statics.createImageById = createImageById;
+<<<<<<< HEAD:app/routers/banner/model/banner.model.js
+=======
+
+
+>>>>>>> master:app/routers/banner/model/banner.model.js
 
 const Banner = mongoose.model('banner', BannerSchema);
 
