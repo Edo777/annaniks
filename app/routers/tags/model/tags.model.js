@@ -4,15 +4,27 @@ Schema = mongoose.Schema;
 const TagsSchema = new Schema({
     description : {
         type: String,
-        require : true
+        required : true
     },
     title : {
         type : String,
-        require : true
+        required : true
     }
-})
+});
 
-const TagsModel = mongoose.model('tags',TagsSchema);
+const {
+    createTags,
+    updateTags,
+    removeTags,
+    findAll
+} = require('./tagsDB.statics');
+
+TagsSchema.statics.createTags = createTags;
+TagsSchema.statics.updateTags = updateTags;
+TagsSchema.statics.removeTags = removeTags;
+TagsSchema.statics.findAll = findAll;
+
+const Tags = mongoose.model('tags',TagsSchema);
 
 
-module.exports = TagsModel;
+module.exports = Tags;

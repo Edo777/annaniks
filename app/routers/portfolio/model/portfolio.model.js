@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const _ = require("lodash");
-const TagsModel = require("../../tags/model/tags.model")
+const {TagsModel} = require("../../tags/model");
+const {PlatformModel} = require("../../platform/model")
 const Schema = mongoose.Schema;
 
 const PortfolioSchema = new Schema({
@@ -47,20 +48,25 @@ const PortfolioSchema = new Schema({
         type : Schema.ObjectId,
         required : false,
         validate : {
-            validator : function(){
-
+            validator : function(id){
+                return PlatformModel.findById(id).then((result) => {
+                    if(result){
+                        return true
+                    }
+                    return false
+                })
             },
             message : "id must be platform idi"
         }
     }],
-    gallery : [{
+    gallery :[{
         images : {
             type :Array,
-            require:true
+            required:true
         },
         isActive : {
             type : Boolean,
-            require:true
+            required:true
         }
     }],
     image : {
@@ -70,19 +76,27 @@ const PortfolioSchema = new Schema({
 
 PortfolioSchema.pre("save", function(){
     this.image = ""
-    this.gallery = []
 })
 
 const {
     findByLanguage,
     findAll,
-    createImageById
+    createImageById,
+    removePlatform,
+    removeTags,
+    removeGallery,
+    addGallery
 } = require("./portfolioDB.statics");
 
 
 PortfolioSchema.statics.findByLanguage = findByLanguage;
 PortfolioSchema.statics.findAll = findAll;
 PortfolioSchema.statics.createImageById = createImageById;
+PortfolioSchema.statics.removeTags = removeTags;
+PortfolioSchema.statics.removePlatform = removePlatform;
+PortfolioSchema.statics.removeGallery = removeGallery;
+PortfolioSchema.statics.addGallery = addGallery;
+
 const Portfolio = mongoose.model('portfolio', PortfolioSchema);
 
 module.exports =  Portfolio ;

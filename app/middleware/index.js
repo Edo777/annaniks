@@ -1,4 +1,4 @@
-const isImage  =  require("./middleware").isImage
+const {isImage}  =  require("./middleware");
 module.exports = {
     isImage
 }

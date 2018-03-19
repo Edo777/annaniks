@@ -46,14 +46,10 @@ function createImage(req, res){
 
 function update(req, res){
     Banner.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
-<<<<<<< HEAD
-        .then(result => res.send(result))
-=======
         .then(result => res.send({
             name : "ok",
             message : "Update Successfully"
         }))
->>>>>>> master
         .catch(err => res.send(err));
 }
 

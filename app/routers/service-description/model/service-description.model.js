@@ -9,9 +9,9 @@ const ServiceDescriptionSchema = new Schema({
         unique : true,
         validate : {
             validator : function (lng) {
-                return ((lng == 'arm') || (lng == 'rus') || (lng == 'eng'))
+                return ((lng.toLowerCase() == 'armenian') || (lng.toLowerCase() == 'russian') || (lng.toLowerCase() == 'england'));
             },
-            message : "language must be arm eng or rus",
+            message : "Language must be Correct..."
         }
     },
     description : {

@@ -7,7 +7,11 @@ module.exports = {
     create,
     createImage,
     update,
-    remove
+    remove,
+    removeTags,
+    removePlatform,
+    removeGallery,
+    addGallery
 }
 
 function getall(req, res) {
@@ -54,4 +58,30 @@ function remove(req,res){
     Portfolio.remove({_id:req.params.id})
         .then((result)=>res.status(200).send(result))
         .catch((err)=>res.send(err));   
+}
+
+function removeTags(req,res){
+    Portfolio.removeTags(req.body.tags)
+        .then((result)=>res.send(result))
+        .catch((err)=>res.send(err));
+}
+
+function removePlatform(req,res){
+    Portfolio.removePlatform(req.body.platform)
+        .then((result)=>res.send(result))
+        .catch((err)=>res.send(err));
+}
+
+function addGallery(req,res){
+    Portfolio.addGallery(req.params.id,req)
+        .then((result)=>res.send(result))
+        .catch((err)=>res.send(err));
+}
+
+function removeGallery(req,res){
+    Portfolio.removeGallery(req.params.id)
+        .then((result)=>res.send({
+            status :'ok'
+        }))
+        .catch((err)=>res.send(err));
 }
