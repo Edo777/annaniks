@@ -479,13 +479,13 @@
         }
       }
     },
-    "/general": {
+    "/email": {
       "get": {
         "tags": [
-          "General"
+          "Email"
         ],
         "description": "Gets all general",
-        "operationId": "localhost:4000/general",
+        "operationId": "localhost:4000/email",
         "produces": [
           "application/json"
         ],
@@ -499,13 +499,13 @@
         }
       }
     },
-    "/general/edit": {
+    "/email/update": {
       "put": {
         "tags": [
-          "General"
+          "Email"
         ],
         "description": "Gets all general",
-        "operationId": "localhost:4000/general/edit",
+        "operationId": "localhost:4000/email/update",
         "produces": [
           "application/json"
         ],
@@ -530,7 +530,7 @@
         }
       }
     },
-    "/service_description/{languege}": {
+    "/service_description/{lng}": {
       "get": {
         "tags": [
           "Service_description"
@@ -556,13 +556,13 @@
         }
       }
     },
-    "/service_description": {
+    "/service_description/create": {
       "post": {
         "tags": [
           "Service_description"
         ],
         "description": "Gets all service",
-        "operationId": "localhost:4000/service_description",
+        "operationId": "localhost:4000/service_description/create",
         "produces": [
           "application/json"
         ],
@@ -587,13 +587,13 @@
         }
       }
     },
-    "/service_description/edit": {
+    "/service_description/update/{id}": {
       "put": {
         "tags": [
           "Service_description"
         ],
         "description": "Gets all service",
-        "operationId": "localhost:4000/service_description/edit",
+        "operationId": "localhost:4000/service_description/update/{id}",
         "produces": [
           "application/json"
         ],
@@ -618,7 +618,7 @@
         }
       }
     },
-    "/service_description/remove": {
+    "/service_description/remove/{lng}": {
       "delete": {
         "tags": [
           "Service_description"
@@ -626,7 +626,7 @@
         "produces": [
           "application/json"
         ],
-        "operationId": "localhost:4000/service_description/remove",
+        "operationId": "localhost:4000/service_description/remove/{lng}",
         "parameters": [
           {
             "name": "body",
@@ -655,109 +655,122 @@
         ]
       }
     },
-    "/portfolio/add" : {
+    "/portfolio/create" : {
       "post" : {
         "tags" :[
           "Portfolio" 
         ]
       }
     },
-    "/portfolio/add/file" : {
+    "/portfolio/create/image/{id}" : {
       "post" : {
         "tags" :[
           "Portfolio" 
         ]
       }
     },
-    "/portfolio/edit/object" : {
+    "/portfolio/update/{id}" : {
       "put" : {
         "tags" :[
           "Portfolio" 
         ]
       }
     },
-    "/portfolio/edit/file" : {
+    "/portfolio/updateimg/{id}" : {
       "put" : {
         "tags" :[
           "Portfolio" 
         ]
       }
     },
-    "/portfolio/remove" : {
-      "delete" : {
-        "tags" :[
-          "Portfolio" 
-        ]
-      }
-    },
-    "/portfolio/remove/tags" : {
-      "delete" : {
-        "tags" :[
-          "Portfolio" 
-        ]
-      }
-    },
-    "/portfolio/remove/platform" : {
-      "delete" : {
-        "tags" :[
-          "Portfolio" 
-        ]
-      }
-    },
-    "/tags/add" : {
-      "post" : {
-        "tags" : [
-          "Tags"
-        ]
-      }
-    },
-    "/tags/edit" : {
-      "put" : {
-        "tags" : [
-          "Tags"
-        ]
-      }
-    },
-    "/tags/remove" : {
-      "delete" : {
-        "tags" : [
-          "Tags"
-        ]
-      }
-    },
-    "/platform/add" : {
-      "post" : {
-        "tags" : [
-          "Platform"
-        ]
-      }
-    },
-    "/platform/edit" : {
-      "put" : {
-        "tags" : [
-          "Platform"
-        ]
-      }
-    },
-    "/platform/remove" : {
-      "delete" : {
-        "tags" : [
-          "Platform"
-        ]
-      }
-    },
-    "/gallery/add" : {
+    "/portfolio/creategallery/{id}" : {
       "put":{
         "tags":[
-          "Gallery"
+          "Portfolio"
         ]
       }
-    }
-    ,
-    "/gallery/remove" : {
+    },
+    "/portfolio/delete/{id}" : {
       "delete" : {
         "tags" :[
-          "Gallery"
+          "Portfolio" 
+        ]
+      }
+    },
+    "/portfolio/delete/tags/{id}" : {
+      "delete" : {
+        "tags" :[
+          "Portfolio" 
+        ]
+      }
+    },
+    "/portfolio/delete/platform/{id}" : {
+      "delete" : {
+        "tags" :[
+          "Portfolio" 
+        ]
+      }
+    },
+    "/portfolio/delete/gallery/{id}" : {
+      "delete" : {
+        "tags" :[
+          "Portfolio"
+        ]
+      }
+    },
+    "/tags/find" : {
+      "get" : {
+        "tags" : [
+          "Tags"
+        ]
+      }
+    },
+    "/tags/create" : {
+      "post" : {
+        "tags" : [
+          "Tags"
+        ]
+      }
+    },
+    "/tags/update/{id}" : {
+      "put" : {
+        "tags" : [
+          "Tags"
+        ]
+      }
+    },
+    "/tags/delete/{id}" : {
+      "delete" : {
+        "tags" : [
+          "Tags"
+        ]
+      }
+    },
+    "/platform/find" : {
+      "get" : {
+        "tags" : [
+          "Platform"
+        ]
+      }
+    },
+    "/platform/create" : {
+      "post" : {
+        "tags" : [
+          "Platform"
+        ]
+      }
+    },
+    "/platform/update/{id}" : {
+      "put" : {
+        "tags" : [
+          "Platform"
+        ]
+      }
+    },
+    "/platform/delete/{id}" : {
+      "delete" : {
+        "tags" : [
+          "Platform"
         ]
       }
     }
