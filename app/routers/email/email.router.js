@@ -5,7 +5,7 @@ const {
     update
 } = require("./email.controller");
 
-router.get('/',            get);
+router.get('/',         get);
 router.put('/update',update);
 
 module.exports = router;

@@ -21,6 +21,18 @@ const ServiceDescriptionSchema = new Schema({
     }
 })
 
+const {
+    cretaeServDes,
+    updateServDes,
+    getByLng,
+    deleteServDes
+} = require("./service-descriptionDB.static")
+
+ServiceDescriptionSchema.statics.getByLng = getByLng;
+ServiceDescriptionSchema.statics.cretaeServDes = cretaeServDes;
+ServiceDescriptionSchema.statics.updateServDes = updateServDes;
+ServiceDescriptionSchema.statics.deleteServDes = deleteServDes;
+
 const ServiceDescription = mongoose.model('service-description',ServiceDescriptionSchema);
 
 module.exports = {ServiceDescription};

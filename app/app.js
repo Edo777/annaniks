@@ -4,6 +4,7 @@ const {PortfolioRouter} = require("./routers/portfolio");
 const {TagsRouter} = require('./routers/tags');
 const {PlatformRouter} = require('./routers/platform');
 const {EmailRouter} = require("./routers/email");
+const {ServDesRouter} = require("./routers/service-description");
 
 const path = require('path');
 const express = require('express');
@@ -18,6 +19,7 @@ class API {
         app.use("/tags",          TagsRouter);
         app.use("/platform",  PlatformRouter);
         app.use("/email",        EmailRouter);
+        app.use("/servicedescription", ServDesRouter);
         
     }
 }
