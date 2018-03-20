@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const _ = require("lodash");
 const {Tags} = require("../../tags/model");
-const {Platform} = require("../../platform/model")
+const {Platform} = require("../../platform/model");
+const arrayUniquePlugin = require('mongoose-unique-array');
 const Schema = mongoose.Schema;
 
 const PortfolioSchema = new Schema({
@@ -32,9 +33,10 @@ const PortfolioSchema = new Schema({
     tags : [{
         type : Schema.ObjectId,
         required : false,
+        unique: true,
         validate : {
             validator : function(id){
-                return Tags.findById(id).then((result) => {
+                return Tags.findById().then((result) => {
                     if(result){
                         return true
                     }
@@ -47,6 +49,7 @@ const PortfolioSchema = new Schema({
     platforms : [{
         type : Schema.ObjectId,
         required : false,
+        unique: true,
         validate : {
             validator : function(id){
                 return Platform.findById(id).then((result) => {
@@ -97,6 +100,7 @@ PortfolioSchema.statics.removePlatform = removePlatform;
 PortfolioSchema.statics.removeGallery = removeGallery;
 PortfolioSchema.statics.addGallery = addGallery;
 
+PortfolioSchema.plugin(arrayUniquePlugin);
 const Portfolio = mongoose.model('portfolio', PortfolioSchema);
 
 module.exports =  Portfolio ;

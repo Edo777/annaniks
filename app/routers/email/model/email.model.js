@@ -37,8 +37,13 @@ const EmailSchema = new Schema({
     }
 })
 
+const {
+    getAll,
+    updateEmail
+} = require("./emailDB.statics");
 
-
+EmailSchema.statics.getAll = getAll;
+EmailSchema.statics.updateEmail = updateEmail;
 
 const Email = mongoose.model('email', EmailSchema);
 
