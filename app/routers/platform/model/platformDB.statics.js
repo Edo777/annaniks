@@ -3,14 +3,14 @@ const findAll = function(){
     return Platform.find({});
 }
 
-const createPlatform = function(tags){
+const createPlatform = function(platform){
     const Platform = this;
-    return Platform.create(tags);
+    return Platform.create(platform);
 }
 
-const updatePlatform = function(id,tags){
+const updatePlatform = function(id,platform){
     const Platform = this;
-    return Platform.update({_id:id},{$set:tags},{runValidators: true});
+    return Platform.update({_id:id},{$set:platform},{runValidators: true});
 }
 
 const removePlatform = function(id){

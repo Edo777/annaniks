@@ -61,13 +61,14 @@ function remove(req,res){
 }
 
 function removeTags(req,res){
-    Portfolio.removeTags(req.body.tags)
+    Portfolio.removeTags(req.params.id)
         .then((result)=>res.send(result))
         .catch((err)=>res.send(err));
 }
 
 function removePlatform(req,res){
-    Portfolio.removePlatform(req.body.platform)
+    console.log(req.params.id)
+    Portfolio.removePlatform(req.params.id)
         .then((result)=>res.send(result))
         .catch((err)=>res.send(err));
 }
@@ -79,7 +80,8 @@ function addGallery(req,res){
 }
 
 function removeGallery(req,res){
-    Portfolio.removeGallery(req.params.id)
+    console.log('fdgfh')
+    Portfolio.removeGallery(req.body.id,req.params.gallery)
         .then((result)=>res.send({
             status :'ok'
         }))

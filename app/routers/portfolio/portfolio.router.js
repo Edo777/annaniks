@@ -19,7 +19,8 @@ const {
 } = require('./portfolio.controller');
 
 const {
-    checkId
+    checkId,
+    checkFileEmpty
 } = require("./portfolio.middleware");
 
 module.exports = router;
@@ -29,8 +30,8 @@ router.get('/@:lng',                     getByLng);
 router.put('/update/:id',                checkId, update);
 router.put('/updateimg/:id',             checkId,upload.single('file'), isImage,createImage);
 router.post('/create/image/:id',         checkId,upload.single('file'), isImage,createImage);
-router.post('/creategallery/:id',        checkId,upload.array('file', 12),isImage,addGallery);
+router.post('/creategallery/:id',        checkId,upload.array('file', 12),checkFileEmpty,isImage,addGallery);
 router.delete('/delete/:id' ,            checkId,remove);
 router.delete('/delete/tags/:id',            removeTags);
 router.delete('/delete/platform/:id',    removePlatform);
-router.delete('/delete/gallery/:id',     removeGallery);
+router.delete('/delete/gallery/:gallery',  checkId,removeGallery);

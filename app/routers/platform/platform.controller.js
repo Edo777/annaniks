@@ -1,13 +1,14 @@
 const {Platform} = require('./model');
 
+
 function getAll(req,res){
-    Tags.findAll()
+    Platform.findAll()
         .then((result)=>res.send(result))
         .catch((err)=>res.send(err));
 }
 
 function create(req,res){
-    Tags.createTags(req.body)
+    Platform.createPlatform(req.body)
         .then((result)=>res.send({
             _id: result._id
         }))
@@ -15,13 +16,13 @@ function create(req,res){
 }
 
 function update(req,res){
-    Tags.updateTags(req.params.id,req.body)
+    Platform.updatePlatform(req.params.id,req.body)
         .then((result)=>res.send(result))
         .catch((err)=>res.send(err));
 }
 
 function remove(req,res){
-    Tags.removeTags(req.params.id)
+    Platform.removePlatform(req.params.id)
         .then((result)=>res.send(result))
         .catch((err)=>res.send(err));
 }

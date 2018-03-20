@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const _ = require("lodash");
-const {TagsModel} = require("../../tags/model");
-const {PlatformModel} = require("../../platform/model")
+const {Tags} = require("../../tags/model");
+const {Platform} = require("../../platform/model")
 const Schema = mongoose.Schema;
 
 const PortfolioSchema = new Schema({
@@ -34,7 +34,7 @@ const PortfolioSchema = new Schema({
         required : false,
         validate : {
             validator : function(id){
-                return TagsModel.findById(id).then((result) => {
+                return Tags.findById(id).then((result) => {
                     if(result){
                         return true
                     }
@@ -49,7 +49,7 @@ const PortfolioSchema = new Schema({
         required : false,
         validate : {
             validator : function(id){
-                return PlatformModel.findById(id).then((result) => {
+                return Platform.findById(id).then((result) => {
                     if(result){
                         return true
                     }

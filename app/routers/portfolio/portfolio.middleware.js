@@ -2,11 +2,12 @@ const ObjectId = require('mongodb').ObjectID;
 const { Portfolio } = require('./model/');
 
 module.exports = {
-    checkId
+    checkId,
+    checkFileEmpty
 }
 
 function checkId(req, res, next) {
-    let id = req.body.id || req.params.id
+    let id = req.body.id || req.params.id;
     if(ObjectId.isValid(id)){
         Portfolio.findById({_id:id})
             .then((result)=>{
@@ -24,5 +25,15 @@ function checkId(req, res, next) {
             name : "idError",
             message : "Is not valid id, it must be 24 characters"
         });
+    }
+}
+
+function checkFileEmpty(req,res,next){
+    if(req.files.length){
+        next();
+    }else{
+        return res.send({
+            file:"not found"
+        })
     }
 }

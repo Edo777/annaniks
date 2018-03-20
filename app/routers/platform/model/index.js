@@ -1,5 +1,5 @@
-const PlatformModel = require('./platform.model');
+const Platform = require('./platform.model');
 
 module.exports = {
-    PlatformModel
+    Platform
 }

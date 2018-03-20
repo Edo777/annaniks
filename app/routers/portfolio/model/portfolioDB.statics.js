@@ -1,5 +1,6 @@
 const fs = require("fs");
 const _ = require("lodash");
+const PATH = require("path");
 
 const findByLanguage = function (lng) {
     let Portfolio = this;
@@ -52,12 +53,12 @@ const createImageById = function (portfolioId, image) {
 
 const removePlatform = function(value){
     const Portfolio = this;
-    return Portfolio.update({},{$pull: { 'tags': { $in: [value] }}},{multi : true})
+    return Portfolio.update({},{$pull: { 'platforms': { $in: [value] }}},{multi : true})
 }
 
 const removeTags = function(value){
     const Portfolio = this;
-    return Portfolio.update({},{$pull: { 'platform': { $in: [value] }}},{multi : true})
+    return Portfolio.update({},{$pull: { 'tags': { $in: [value] }}},{multi : true})
 }
 
 const addGallery = function(id,req){
@@ -73,29 +74,15 @@ const addGallery = function(id,req){
     return Portfolio.update({_id:id},{$push:{'gallery':gallery}},{runValidators: true});
 }
 
-const removeGallery = function(idGallery){
+const removeGallery = function(id,idGallery){
+    console.log(idGallery)
     const Portfolio = this;
-    // Portfolio.aggregate([
-    //     { "$match": { "_id": { "$in": idGallery } } },
-    //     {
-    //         $graphLookup: {
-    //             from: 'information',
-    //             startWith: '$gallery',
-    //             connectFromField: 'gallery',
-    //             connectToField: '_id',
-    //             as: 'finish'
-    //         }
-    //     },
-    //     { $project: { 'gallery': 1 } }
-    // ])
-    //     .then((result) => {
-    //         console.log(result);
-    //     })
-    //     .catch((err) => (
-    //         console.log(err)
-    //     ))
-    return Portfolio.findOneAndUpdate({_id:'5aafa4a7e181b359e3fab714'},{$pull: { 'gallery':{_id: idGallery}}},{multi : true},(err,result)=>{
-        console.log(result.gallery);
+    return Portfolio.findOneAndUpdate({_id:id},{$pull: { 'gallery':{_id: idGallery}}},{multi : true},(err,result)=>{
+        let listImg = _.find(result.gallery, {'isActive': true}).images;
+        let length = listImg.length;
+        for(let i = 0;i < length;i++){
+            fs.unlinkSync((PATH.join(__dirname,'../','../','static','imgs',listImg[i])));
+        }
     }) 
 }
 
