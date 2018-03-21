@@ -1,5 +1,11 @@
 const {ServiceDescription} = require("./model");
 
+function getAll(req,res){
+    ServiceDescription.getAll()
+        .then((result)=>res.send(result))
+        .catch((err)=>res.send(err));
+}
+
 function getByLng(req,res){
     ServiceDescription.getByLng(req.params.lng)
         .then((result)=>res.send(result))
@@ -28,5 +34,6 @@ module.exports = {
     getByLng,
     create,
     update,
-    remove
+    remove,
+    getAll
 }

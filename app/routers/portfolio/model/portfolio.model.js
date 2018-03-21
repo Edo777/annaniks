@@ -3,6 +3,7 @@ const _ = require("lodash");
 const {Tags} = require("../../tags/model");
 const {Platform} = require("../../platform/model");
 const arrayUniquePlugin = require('mongoose-unique-array');
+
 const Schema = mongoose.Schema;
 
 const PortfolioSchema = new Schema({
@@ -33,10 +34,10 @@ const PortfolioSchema = new Schema({
     tags : [{
         type : Schema.ObjectId,
         required : false,
-        unique: true,
+        // unique: true,
         validate : {
             validator : function(id){
-                return Tags.findById().then((result) => {
+                return Tags.findById(id).then((result) => {
                     if(result){
                         return true
                     }
@@ -49,7 +50,7 @@ const PortfolioSchema = new Schema({
     platforms : [{
         type : Schema.ObjectId,
         required : false,
-        unique: true,
+        // unique: true,
         validate : {
             validator : function(id){
                 return Platform.findById(id).then((result) => {
@@ -77,10 +78,6 @@ const PortfolioSchema = new Schema({
     }
 });
 
-PortfolioSchema.pre("save", function(){
-    this.image = ""
-})
-
 const {
     findByLanguage,
     findAll,
@@ -92,6 +89,7 @@ const {
 } = require("./portfolioDB.statics");
 
 
+
 PortfolioSchema.statics.findByLanguage = findByLanguage;
 PortfolioSchema.statics.findAll = findAll;
 PortfolioSchema.statics.createImageById = createImageById;
@@ -100,7 +98,13 @@ PortfolioSchema.statics.removePlatform = removePlatform;
 PortfolioSchema.statics.removeGallery = removeGallery;
 PortfolioSchema.statics.addGallery = addGallery;
 
-PortfolioSchema.plugin(arrayUniquePlugin);
+PortfolioSchema.pre('save', function () {
+    this.image = ""
+    this.tags = _.unique(this.tags);
+    console.log(this.tags+'++++++++++++++++')
+  });
+
+// PortfolioSchema.plugin(arrayUniquePlugin);
 const Portfolio = mongoose.model('portfolio', PortfolioSchema);
 
 module.exports =  Portfolio ;

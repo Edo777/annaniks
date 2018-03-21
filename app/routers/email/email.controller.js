@@ -13,7 +13,9 @@ function get(req,res){
 
 function update(req,res){
     Email.updateEmail(req.body)
-        .then((result)=>res.send(result))
+        .then((result)=>res.send({
+            message : "Update Successfully"
+        }))
         .catch((err)=>res.send(err));
 }
 

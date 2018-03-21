@@ -18,9 +18,15 @@ function deleteServDes(lng){
     return ServDes.remove({language:lng});
 }
 
+function getAll(){
+    const ServDes = this;
+    console.log('llll');
+    return ServDes.find();    
+}
 module.exports = {
     getByLng,
     cretaeServDes,
     updateServDes,
-    deleteServDes
+    deleteServDes,
+    getAll
 }

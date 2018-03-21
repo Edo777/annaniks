@@ -4,9 +4,11 @@ const {
     create,
     getByLng,
     update,
-    remove
+    remove,
+    getAll
 } = require("./service-description.controller");
 
+router.get('/all',getAll)
 router.get('/:lng',getByLng);
 router.post('/create',create);
 router.put('/update/:id',update);

@@ -1,5 +1,6 @@
 const { Portfolio } = require("./model");
 const _ = require("lodash");
+const unique = require('underscore');
 
 module.exports = {
     getall,
@@ -28,12 +29,14 @@ function getByLng(req, res){
 
 function create(req, res){
     var portfolio = req.body;
+    req.body.tags = unique.unique(req.body.tags);
+    req.body.portfolio = unique.unique(req.body.portfolio);
     Portfolio.create(portfolio)
         .then((result) => {
             res.send(_.pick(result, ['_id']));
         })
         .catch((error) => {
-            res.send(_.pick(error, ['name', 'message']));
+            res.send(error);
         })
 }
 
@@ -80,7 +83,6 @@ function addGallery(req,res){
 }
 
 function removeGallery(req,res){
-    console.log('fdgfh')
     Portfolio.removeGallery(req.body.id,req.params.gallery)
         .then((result)=>res.send({
             status :'ok'

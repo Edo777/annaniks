@@ -12,7 +12,10 @@ function create(req,res){
         .then((result)=>res.send({
             _id: result._id
         }))
-        .catch((err)=>res.send(err));
+        .catch((err)=>res.send({
+            name : err.name,
+            message : err.message
+        }));
 }
 
 function update(req,res){

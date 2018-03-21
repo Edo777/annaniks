@@ -4,7 +4,7 @@ const PATH = require("path");
 
 const findByLanguage = function (lng) {
     let Portfolio = this;
-    return Portfolio.findOne({ language: lng, isActive: true });
+    return Portfolio.find({ language: lng, isActive: true });
 };
 
 const findAll = function () {
@@ -75,7 +75,6 @@ const addGallery = function(id,req){
 }
 
 const removeGallery = function(id,idGallery){
-    console.log(idGallery)
     const Portfolio = this;
     return Portfolio.findOneAndUpdate({_id:id},{$pull: { 'gallery':{_id: idGallery}}},{multi : true},(err,result)=>{
         let listImg = _.find(result.gallery, {'isActive': true}).images;

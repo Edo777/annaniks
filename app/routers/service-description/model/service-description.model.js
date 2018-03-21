@@ -25,9 +25,11 @@ const {
     cretaeServDes,
     updateServDes,
     getByLng,
-    deleteServDes
+    deleteServDes,
+    getAll
 } = require("./service-descriptionDB.static")
 
+ServiceDescriptionSchema.statics.getAll = getAll;
 ServiceDescriptionSchema.statics.getByLng = getByLng;
 ServiceDescriptionSchema.statics.cretaeServDes = cretaeServDes;
 ServiceDescriptionSchema.statics.updateServDes = updateServDes;
