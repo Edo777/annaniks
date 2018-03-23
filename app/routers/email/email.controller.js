@@ -19,7 +19,18 @@ function update(req,res){
         .catch((err)=>res.send(err));
 }
 
+function getByLanguage(req,res){
+    Email.getByLanguage(req.params.lng)
+        .then((result)=>{
+            res.send(result)
+        })
+        .catch((err)=>{
+            res.send(err);
+        })
+}
+
 module.exports = {
     get,
-    update
+    update,
+    getByLanguage
 }

@@ -13,7 +13,6 @@ const EmailSchema = new Schema({
             message: ""
         }
     },
-
     e_mail_hr: {
         type: String,
         trim: true,
@@ -24,7 +23,6 @@ const EmailSchema = new Schema({
             message: ""
         }
     },
-
     e_mail_info: {
         type: String,
         trim: true,
@@ -34,23 +32,46 @@ const EmailSchema = new Schema({
             },
             message: ""
         }
-    }
+    },
+    phone : {
+        type : Number,
+        required : true
+    },
+    localization : [{
+            language : {
+                type : String,
+                required : true,
+            },
+            address : {
+                type : String,
+                required : true
+            }
+        }
+    ]
+
 })
 
 const {
     getAll,
-    updateEmail
+    updateEmail,
+    getByLanguage
 } = require("./emailDB.statics");
 
 EmailSchema.statics.getAll = getAll;
 EmailSchema.statics.updateEmail = updateEmail;
+EmailSchema.statics.getByLanguage = getByLanguage;
 
 const Email = mongoose.model('email', EmailSchema);
 
 // Email.create({
 //     e_mail_concat: "example@gmail.com",
 //     e_mail_hr : "example@gmail.com",
-//     e_mail_info : "example@gmail.com"
+//     e_mail_info : "example@gmail.com",
+//     phone :098888888 ,
+//     localization : [{
+//         language : "armenian",
+//         address : "Gyumri"
+//     }]
 // })
 
 module.exports = { Email };
