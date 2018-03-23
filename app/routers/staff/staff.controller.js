@@ -1,5 +1,7 @@
 const {Staff} = require("./model");
 const _ = require("lodash");
+const PATH = require('path');
+const fs = require("fs");
 
 module.exports = {
     getall,
@@ -51,10 +53,18 @@ function update(req, res){
 }
 
 function remove(req,res){
-    Staff.remove({_id:req.params.id})
-        .then((result)=>res.status(200).send({
-            name : "ok",
-            mesage : "Deleted successfully"
-        }))
+    Staff.findByIdAndRemove({_id:req.params.id})
+        .then((result)=>{
+            if (result.image) {
+                fs.unlinkSync(PATH.join(__dirname, '..', '..','routers', 'static', 'imgs', result.image));
+            } else {
+                console.log("this is 1");
+            }
+            res.status(200).send({
+                name : "ok",
+                mesage : "Deleted successfully"
+            }
+        )
+        })
         .catch((err)=>res.send(err));   
 }
