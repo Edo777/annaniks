@@ -9,7 +9,7 @@ const URL = "mongodb://annaniks:annaniks@ds121189.mlab.com:21189/annaniks";
 const morgan = require("morgan");
 const app = express();
 const API = require("./app").API;
-mongoose.connect(URL)
+mongoose.connect(URL,{poolSize:10})
     .then( () => {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended : true}));

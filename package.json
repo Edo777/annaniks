@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2",
+    "express-oas-generator": "^0.1.16",
     "lodash": "^4.17.5",
     "mongod": "^2.0.0",
     "mongodb": "^3.0.4",

@@ -102,9 +102,12 @@
     "/banner/create/image/{id}": {
       "post": {
         "x-swagger-router-controller": "images",
-        "operationId": "localhost:4000/banners/add/file",
+        "operationId": "localhost:4000/banners/create/image/:id",
         "tags": [
           "Banners"
+        ],
+        "produces": [
+          "Content-Type: multipart/form-data"
         ],
         "description": "Upload image",
         "consumes": [
@@ -112,20 +115,18 @@
         ],
         "parameters": [
           {
+            "name" : "id",
+            "in" : "path",
+            "description" : "id to banner",
+            "required" : true,
+            "example" : "5a969d028dd62a57804ef17b"
+          },
+          {
             "name": "file",
             "in": "formData",
             "type": "file",
             "description": "Image information",
             "required": true
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Id to banners image upload",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/bannersIdMongoDb"
-            }
           }
         ],
         "responses": {
@@ -150,15 +151,15 @@
           "Banners"
         ],
         "description": "Gets all banners",
-        "operationId": "localhost:4000/banners/object",
+        "operationId": "localhost:3000/banners/",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "description": "Edit json to banners",
+            "name": "id",
+            "in": "path",
+            "description": "id to banner",
             "required": true,
             "schema": {
               "$ref": "#/definitions/bannersEditObject"
@@ -821,11 +822,6 @@
           "required": false,
           "type": "string",
           "example": "arm"
-        },
-        "id": {
-          "required": true,
-          "type": "string",
-          "example": ""
         }
       }
     },
