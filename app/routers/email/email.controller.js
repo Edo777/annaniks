@@ -1,6 +1,5 @@
 const {Email} = require("./model");
 
-
 function get(req,res){
     Email.getAll()
         .then((result)=>{
@@ -9,6 +8,22 @@ function get(req,res){
         .catch((err)=>{
             res.send(err);
         })
+}
+
+function cretaeLanguage(req,res){
+    if(req.body.language && req.body.address){
+        Email.cretaeLanguage(req)
+        .then((result)=>{
+            res.sendStatus(200);
+        })
+        .catch((err)=>{
+            res.send(err)
+        })
+    }else{
+        res.send({
+            message : "validation error"
+        })
+    }
 }
 
 function update(req,res){
@@ -32,5 +47,6 @@ function getByLanguage(req,res){
 module.exports = {
     get,
     update,
-    getByLanguage
+    getByLanguage,
+    cretaeLanguage
 }

@@ -10,8 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.7.2",
     "express": "^4.16.2",
     "express-oas-generator": "^0.1.16",
+    "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
+    "helmet": "^3.12.0",
     "lodash": "^4.17.5",
     "mongod": "^2.0.0",
     "mongodb": "^3.0.4",

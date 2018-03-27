@@ -5,7 +5,8 @@ const {TagsRouter} = require('./routers/tags');
 const {PlatformRouter} = require('./routers/platform');
 const {EmailRouter} = require("./routers/email");
 const {ServDesRouter} = require("./routers/service-description");
-const {StaffRouter} = require('./routers/staff')
+const {StaffRouter} = require('./routers/staff');
+const {LanguageRouter} = require('./routers/language');
 
 
 const path = require('path');
@@ -36,14 +37,15 @@ class API {
 
 
         app.use("/static",express.static(path.join(__dirname,'routers','static','imgs')));
-        app.use("/banner",      BannerRouter);
-        app.use("/service",    ServiceRouter);
-        app.use("/portfolio",PortfolioRouter);
-        app.use("/tags",          TagsRouter);
-        app.use("/platform",  PlatformRouter);
-        app.use("/email",        EmailRouter);
+        app.use("/banner",              BannerRouter);
+        app.use("/service",            ServiceRouter);
+        app.use("/portfolio",        PortfolioRouter);
+        app.use("/tags",                  TagsRouter);
+        app.use("/platform",          PlatformRouter);
+        app.use("/email",                EmailRouter);
         app.use("/servicedescription", ServDesRouter);
-        app.use("/staff",StaffRouter)
+        app.use("/staff",                StaffRouter);
+        app.use("/language",          LanguageRouter);
         expressOasGenerator.init(app, {});     
     }
 }

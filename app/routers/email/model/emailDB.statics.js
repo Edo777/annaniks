@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 function getAll(){
     const Email = this;
     return Email.findOne({});
@@ -5,7 +7,15 @@ function getAll(){
 
 function updateEmail(email){
     const Email = this;
-    return Email.update({},{$set:email},{runValidator:true}); 
+    return Email.update({},{
+        $set : _.pick(email,['localization']) },{runValidators:true}); 
+}
+
+function cretaeLanguage(langauge){
+    const Email = this;
+    return Email.update({},{
+        $push : {'localization' : _.pick(langauge.body,['language','address'])},
+    })
 }
 
 function getByLanguage(lng){
@@ -30,5 +40,6 @@ function getByLanguage(lng){
 module.exports = {
     getAll,
     updateEmail,
-    getByLanguage
+    getByLanguage,
+    cretaeLanguage
 }

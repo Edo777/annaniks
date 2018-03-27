@@ -3,7 +3,7 @@ const _ = require("lodash");
 const Schema = mongoose.Schema;
 
 const EmailSchema = new Schema({
-    e_mail_concat: {
+    e_mail_contact: {
         type: String,
         trim: true,
         validate: {
@@ -54,12 +54,14 @@ const EmailSchema = new Schema({
 const {
     getAll,
     updateEmail,
-    getByLanguage
+    getByLanguage,
+    cretaeLanguage
 } = require("./emailDB.statics");
 
 EmailSchema.statics.getAll = getAll;
 EmailSchema.statics.updateEmail = updateEmail;
 EmailSchema.statics.getByLanguage = getByLanguage;
+EmailSchema.statics.cretaeLanguage = cretaeLanguage;
 
 const Email = mongoose.model('email', EmailSchema);
 
