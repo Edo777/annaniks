@@ -47,8 +47,10 @@ function createImage(req, res) {
 }
 
 function update(req, res) {
-    Banner.findOneAndUpdate(req.params.id, req.body, { runValidators: true })
+    console.log(req.params.id)
+    Banner.findOneAndUpdate({_id :req.params.id}, req.body, { runValidators: true })
         .then(result => res.send({
+            result :result,
             name: "ok",
             message: "Update Successfully"
         }))

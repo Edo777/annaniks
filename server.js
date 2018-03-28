@@ -5,7 +5,7 @@ const session = require('express-session');
 const compression = require('compression');
 
 mongoose.Promise = Promise;
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 const bodyParser = require("body-parser");
 //dev dependencies
 const PORT = process.env.PORT || 3000;

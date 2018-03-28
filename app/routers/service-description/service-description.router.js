@@ -10,7 +10,7 @@ const {
 
 router.get('/all',getAll)
 router.get('/:lng',getByLng);
-router.post('/create',create);
+//router.post('/create',create);
 router.put('/update/:id',update);
 router.delete('/delete/:lng',remove);
 

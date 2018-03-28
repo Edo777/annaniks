@@ -54,14 +54,13 @@ const EmailSchema = new Schema({
 const {
     getAll,
     updateEmail,
-    getByLanguage,
-    cretaeLanguage
+    getByLanguage
+    
 } = require("./emailDB.statics");
 
 EmailSchema.statics.getAll = getAll;
 EmailSchema.statics.updateEmail = updateEmail;
 EmailSchema.statics.getByLanguage = getByLanguage;
-EmailSchema.statics.cretaeLanguage = cretaeLanguage;
 
 const Email = mongoose.model('email', EmailSchema);
 

@@ -7,15 +7,19 @@ function getAll(){
 
 function updateEmail(email){
     const Email = this;
-    return Email.update({},{
-        $set : _.pick(email,['localization']) },{runValidators:true}); 
-}
-
-function cretaeLanguage(langauge){
-    const Email = this;
-    return Email.update({},{
-        $push : {'localization' : _.pick(langauge.body,['language','address'])},
-    })
+    console.log(email)
+    let localization = email.localization;
+    delete email.localization
+    let objLocalization = {}; 
+    if (email.language) {
+        (email.address) ? email[`localization.$.address`] = email.address : false;  
+        return Email.update({"localization.language": email.language },
+            {
+                $set:email
+            })
+    } else {
+        return Email.findOneAndUpdate({}, email, { runValidators: true });
+    }
 }
 
 function getByLanguage(lng){
@@ -40,6 +44,5 @@ function getByLanguage(lng){
 module.exports = {
     getAll,
     updateEmail,
-    getByLanguage,
-    cretaeLanguage
+    getByLanguage   
 }

@@ -54,7 +54,7 @@ function createImage(req, res) {
 }
 
 function update(req, res) {
-    Portfolio.findOneAndUpdate(req.params.id, req.body, { runValidators: true })
+    Portfolio.findOneAndUpdate({_id : req.params.id}, req.body, { runValidators: true })
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }

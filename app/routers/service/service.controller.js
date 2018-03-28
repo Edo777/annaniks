@@ -45,7 +45,7 @@ function createImage(req, res) {
 }
 
 function update(req, res) {
-    Service.findOneAndUpdate(req.params.id, req.body, { runValidators: true })
+    Service.findOneAndUpdate({_id :req.params.id}, req.body, { runValidators: true })
         .then(result => res.send({
             name: "ok",
             message: "Update Succesfully"

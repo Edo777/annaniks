@@ -1,11 +1,11 @@
-const {Staff} = require("./model");
+const { Staff } = require("./model");
 const _ = require("lodash");
 const PATH = require('path');
 const fs = require("fs");
 
 module.exports = {
     getall,
-    getByLng, 
+    getByLng,
     create,
     createImage,
     update,
@@ -18,13 +18,13 @@ function getall(req, res) {
         .catch(err => res.send(err));
 }
 
-function getByLng(req, res){
+function getByLng(req, res) {
     Staff.findByLanguage(req.params.lng)
         .then(result => res.send(result))
         .catch(err => res.send(err));
 }
 
-function create(req, res){
+function create(req, res) {
     let staff = req.body;
     Staff.create(staff)
         .then((result) => {
@@ -35,7 +35,7 @@ function create(req, res){
         })
 }
 
-function createImage(req, res){
+function createImage(req, res) {
     Staff.createImageById(req.params.id, req.file)
         .then((result) => {
             res.sendStatus(200);
@@ -43,28 +43,44 @@ function createImage(req, res){
         .catch(err => res.send(err));
 }
 
-function update(req, res){
-    Staff.findOneAndUpdate(req.params.id, req.body,{runValidators: true})
-        .then(result => res.send({
-            name : "ok",
-            message : "Update Successfully"
-        }))
-        .catch(err => res.send(err));
+function update(req, res) {
+    let localization = req.body.localization;
+    delete req.body.localization
+    let objLocalization = {};
+    (req.body.name) ? req.body[`localization.$.name`] = req.body.name : false;
+    (req.body.rol) ? req.body[`localization.$.rol`] = req.body.rol : false;    
+    if (req.body.language) {
+        Staff.update({ _id: req.params.id, "localization.language": req.body.language },
+            {
+                $set:req.body
+            }).then((result) => {
+                res.send(result)
+            }).catch((err) => {
+                res.send(err);
+            })
+    } else {
+        Staff.findOneAndUpdate(req.params.id, req.body, { runValidators: true })
+            .then(result => res.send({
+                name: "ok",
+                message: "Update Successfully"
+            }))
+            .catch(err => res.send(err));
+    }
 }
 
-function remove(req,res){
-    Staff.findByIdAndRemove({_id:req.params.id})
-        .then((result)=>{
+function remove(req, res) {
+    Staff.findByIdAndRemove({ _id: req.params.id })
+        .then((result) => {
             if (result.image) {
-                fs.unlinkSync(PATH.join(__dirname, '..', '..','routers', 'static', 'imgs', result.image));
+                fs.unlinkSync(PATH.join(__dirname, '..', '..', 'routers', 'static', 'imgs', result.image));
             } else {
                 console.log("this is 1");
             }
             res.status(200).send({
-                name : "ok",
-                mesage : "Deleted successfully"
+                name: "ok",
+                mesage: "Deleted successfully"
             }
-        )
+            )
         })
-        .catch((err)=>res.send(err));   
+        .catch((err) => res.send(err));
 }

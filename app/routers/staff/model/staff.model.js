@@ -47,6 +47,11 @@ StaffSchema.statics.findAll = findAll;
 StaffSchema.statics.createStaff = createStaff;
 StaffSchema.statics.createImageById = createImageById;
 
+StaffSchema.pre('save',function(){
+    console.log(this.image)
+    this.image = ""
+})
+
 const Staff = mongoose.model('staff',StaffSchema);
 
 module.exports = Staff
