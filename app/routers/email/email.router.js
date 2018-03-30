@@ -7,7 +7,7 @@ const {
 } = require("./email.controller");
 
 router.get('/',                          get);
-router.get('/@lng',            getByLanguage);
+router.get('/:lng',            getByLanguage);
 router.put('/update',                 update);
 
 module.exports = router;

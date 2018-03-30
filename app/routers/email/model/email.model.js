@@ -44,7 +44,7 @@ const EmailSchema = new Schema({
             },
             address : {
                 type : String,
-                required : true
+                default : ""
             }
         }
     ]

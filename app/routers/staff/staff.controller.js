@@ -59,7 +59,7 @@ function update(req, res) {
                 res.send(err);
             })
     } else {
-        Staff.findOneAndUpdate(req.params.id, req.body, { runValidators: true })
+        Staff.findOneAndUpdate({_id:req.params.id}, req.body, { runValidators: true })
             .then(result => res.send({
                 name: "ok",
                 message: "Update Successfully"

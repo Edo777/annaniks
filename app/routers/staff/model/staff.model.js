@@ -9,11 +9,11 @@ const StaffSchema = new mongoose.Schema({
             },
             name : {
                 type:String,
-                required : true
+                default : ""
             },
             rol : {
                 type : String,
-                required : true
+                default : ""
             }
         }
     ],
@@ -48,7 +48,6 @@ StaffSchema.statics.createStaff = createStaff;
 StaffSchema.statics.createImageById = createImageById;
 
 StaffSchema.pre('save',function(){
-    console.log(this.image)
     this.image = ""
 })
 

@@ -28,7 +28,6 @@ mongoose.connect(URL, { poolSize: 10 })
         })
         );
         app.listen(PORT, () => {
-            require("./swager")(app)
             console.log(`Listening to ${PORT}`);
         })
         API.initApp(app);

@@ -1,5 +1,5 @@
 function isImage(err, req, res, next) {
-    if (err) {
+    if (err || (req.file == undefined)) {
         res.send('Only images are allowed!');
     } else {
         next();
