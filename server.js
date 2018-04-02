@@ -17,7 +17,7 @@ mongoose.connect(URL, { poolSize: 10 })
     .then(() => {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true }));
-        app.use(morgan("dev"));
+        //app.use(morgan("dev"));
         app.use(helmet());
         app.disable('x-powered-by');
         app.use(compression());

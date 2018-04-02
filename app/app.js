@@ -7,6 +7,7 @@ const { EmailRouter } = require("./routers/email");
 const { ServDesRouter } = require("./routers/service-description");
 const { StaffRouter } = require('./routers/staff');
 const { LanguageRouter } = require('./routers/language');
+const { MessageRouter } = require("./routers/message");
 
 
 const path = require('path');
@@ -68,6 +69,7 @@ class API {
         app.use("/servicedescription", ServDesRouter);
         app.use("/staff", StaffRouter);
         app.use("/language", LanguageRouter);
+        app.use("/message",MessageRouter);
         expressOasGenerator.init(app, {});
     }
 }

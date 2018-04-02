@@ -193,14 +193,24 @@ function deletedKey(key) {
                 for (const proprty of key) {
                     delete item['translates'][proprty]
                 }
+
                 Language.update({'localization.language' : item.language},{
                     $set : {'localization.$.translates' : item.translates}
                 }).then((result)=>{
                     resolve('ok')
                 }).catch('not faund')
+                
             }}
         })
     })
+}
+
+
+function deletedLng(lng){
+    const Language = this;
+    return Language.update({'localization.language': lng},
+        {$set : {'localization.$.deleted' : true}}
+    )    
 }
 
 module.exports = {
@@ -209,5 +219,6 @@ module.exports = {
     createKey,
     updateIcon,
     updateByLng,
-    deletedKey
+    deletedKey,
+    deletedLng
 }
