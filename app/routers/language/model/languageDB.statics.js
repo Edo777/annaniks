@@ -196,7 +196,7 @@ function deletedKey(key) {
                 Language.update({'localization.language' : item.language},{
                     $set : {'localization.$.translates' : item.translates}
                 }).then((result)=>{
-                    resolve(result)
+                    resolve('ok')
                 }).catch('not faund')
             }}
         })

@@ -11,7 +11,6 @@ const findAll = function (lng) {
 };
 
 const createImageById = function (serviceId, image) {
-    console.log(image.filename)
     if (!image) {
         return Promise.reject({
             name: "uploadError",
@@ -20,7 +19,6 @@ const createImageById = function (serviceId, image) {
     }
     let path = image.filename;
     let Service = this;
-
     return Service.findById(serviceId)
         .then((result) => {
             if (!result) {
