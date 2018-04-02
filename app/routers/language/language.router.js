@@ -12,7 +12,8 @@ const {
     getByLng,
     createKey,
     updateIcon,
-    updateByLng
+    updateByLng,
+    deletedKey
 } = require('./language.controller');
 
 const {
@@ -27,6 +28,6 @@ router.post('/create/key',         createKey);
 router.put('/updateicone/:lng',checkLng,upload.single('file'),isImage,updateIcon);
 router.put('/update/language/:lng', updateByLng);
 router.delete('/delete/@lng');
-router.delete('/delete/key');
+router.delete('/delete/key',      deletedKey);
 
 module.exports = router;

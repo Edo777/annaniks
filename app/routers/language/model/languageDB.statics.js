@@ -8,13 +8,33 @@ const _ = require('lodash');
 function createLanguage(lng) {
     const Language = this;
     return new Promise((resolve, reject) => {
-        Language.update({}, {
-            $push: { 'localization': lng }
-        }, { runValidators: true }).catch((err) => {
-            reject({
-                "lng": err
-            });
+        ServiceDescription.create(lng)
+        .then((result) => {
+            resolve({
+                status: "ok"
+            })
         })
+        .catch((err) => {
+            reject({
+                "ser-des": err
+            })
+        })
+
+        Language.findOne({}).then((result)=>{
+            lng.translates = {}
+            for (const item of result.keysTranslation) {
+                lng['translates'][item] = ''
+            }
+            resolve('ok')
+            Language.update({}, {
+                $push: { 'localization': lng },
+            }, { runValidators: true }).catch((err) => {
+                reject({
+                    "lng": err
+                });
+            })
+        })
+
         Email.update({}, {
             $push: { 'localization': lng }
         }, { runValidators: true }).catch((err) => {
@@ -29,17 +49,6 @@ function createLanguage(lng) {
                 "staff": err
             });
         })
-        ServiceDescription.create(lng)
-            .then((result) => {
-                resolve({
-                    status: "ok"
-                })
-            })
-            .catch((err) => {
-                reject({
-                    "ser-des": err
-                })
-            })
     })
 }
 
@@ -66,22 +75,61 @@ function getByLng(lng) {
 function createKey(key) {
     const Language = this;
     return new Promise((resolve, reject) => {
-        Language.findOne().then((res) => {
-            let keysObject = {};
-            res['keysTranslation'].push(key)
-            for (let i = 0; i < res['keysTranslation'].length; i++) {
-                keysObject[`${res['keysTranslation'][i]}`] = ""
-            }
-            for (let i = 0; i < res['localization'].length; ++i) {
-                Language.update({ _id: res._id, 'localization.language': res['localization'][i].language }, {
-                    $set: { 'localization.$.translates': keysObject },
-                    $addToSet: { 'keysTranslation': key }
-                }).then((err) => {
+        Language.findOneAndUpdate({},{
+            $addToSet : {keysTranslation : key}
+        },(err,result)=>{
+            if(err) {
+                console.log('err')
+            }else{
+            for (const item of result.localization) {
+                if(item['translates'] === undefined){
+                    item['translates'] = {}
+                }
+                for (const proprty of key) {
+                    item['translates'][proprty] = ""
+                }
+                Language.update({'localization.language' : item.language},{
+                    $set : {'localization.$.translates' : item.translates}
+                }).then(()=>{
                     resolve('ok')
-                }).catch((err) => {
-                    reject(err)
-                })
+                }).catch('not faund')
+            }}
+        })
+    })
+}
+
+function updateByLng(object, lng) {
+    const Language = this;
+    return new Promise((resolve, reject) => {
+        Language.aggregate([
+            { $match: {} },
+            {
+                $project: {
+                    localization: {
+                        $filter: {
+                            input: "$localization",
+                            as: "localization",
+                            cond: {
+                                $and: [{ $eq: ["$$localization.language", lng] }, { $eq: ["$$localization.deleted", false] }],
+                            }
+                        }
+                    }
+                }
             }
+        ], (err, res) => {
+            let oldTranstale = {} = res[0].localization[0].translates;
+            _.mapKeys(oldTranstale,(value,key)=>{
+                if(object.translates[key] != undefined){
+                    oldTranstale[key] = object.translates[key]
+                }
+            })
+            Language.update({'localization.language' : lng},{
+                $set : {'localization.$.isActive' : object.isActeve,'localization.$.translates':oldTranstale}
+            }).then((result)=>{
+                resolve(result)
+            }).catch((err)=>{
+                reject(err);
+            })
         })
     })
 }
@@ -112,8 +160,9 @@ function updateIcon(lng, file) {
                 }
             }
         ], (err, res) => {
-            if (res[0].localization[0].icon) {
-                fs.unlink(PATH.join(__dirname, '..', '..', 'static', 'imgs', res[0].localization[0].icon), function (err) { });
+            let icon = res[0].localization[0].icon;
+            if (icon) {
+                fs.unlink(PATH.join(__dirname, '..', '..', 'static', 'imgs', icon), function (err) { });
             }
             Language.update({ 'localization.language': lng }, {
                 $set: { 'localization.$.icon': file.filename }
@@ -121,64 +170,44 @@ function updateIcon(lng, file) {
                 resolve({
                     status: "ok"
                 })
-            })
-                .catch((err) => {
+            }).catch((err) => {
                     status: "faild"
                 })
         })
     })
 }
 
-function updateByLng(object, lng) {
+function deletedKey(key) {
     const Language = this;
     return new Promise((resolve, reject) => {
-        resolve('ok');
-
-        Language.aggregate([
-            { $match: {} },
-            {
-                $project: {
-                    localization: {
-                        $filter: {
-                            input: "$localization",
-                            as: "localization",
-                            cond: {
-                                $and: [{ $eq: ["$$localization.language", lng] }, { $eq: ["$$localization.deleted", false] }],
-                            }
-                        }
-                    }
+        Language.findOneAndUpdate({},{
+            $pull : {keysTranslation :{$in: key}}
+        },(err,result)=>{
+            if(err) {
+                console.log('err')
+            }else{
+            for (const item of result.localization) {
+                if(item['translates'] === undefined){
+                    item['translates'] = {}
                 }
-            }
-        ], (err, res) => {
-            if (res[0].localization.length) {
-                // if(object.translates){
-
-                // }
-                _.mapKeys(object.translates, function(value, key) {
-                    if(res[0].localization.translates,_.has(value)){
-                        console.log(value);
-                    }else{
-                        delete object.translates.value;
-                    }
-                });
-
-                Language.update({'localization.language': lng }, {
-                    $set : {'localization.$.translates' : object.translates}
+                for (const proprty of key) {
+                    delete item['translates'][proprty]
+                }
+                Language.update({'localization.language' : item.language},{
+                    $set : {'localization.$.translates' : item.translates}
                 }).then((result)=>{
-                    console.log(result)
-                })
-                .catch((err)=>{
-                    console.log(err)
-                })
-            }
+                    resolve(result)
+                }).catch('not faund')
+            }}
         })
-        // console.log(object)
     })
 }
+
 module.exports = {
     createLanguage,
     getByLng,
     createKey,
     updateIcon,
-    updateByLng
+    updateByLng,
+    deletedKey
 }

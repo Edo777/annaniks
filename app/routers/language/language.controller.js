@@ -72,6 +72,16 @@ function updateByLng(req,res){
         })
 }
 
+function deletedKey(req,res){
+    Language.deletedKey(req.body.key)
+        .then((result)=>{
+            res.send(result);
+        })
+        .catch((err)=>{
+            res.send(err);
+        })
+}
+
 module.exports = {
     getAll,
     createLanguage,
@@ -79,5 +89,6 @@ module.exports = {
     getByLng,
     createKey,
     updateIcon,
-    updateByLng
+    updateByLng,
+    deletedKey
 }

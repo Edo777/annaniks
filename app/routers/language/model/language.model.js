@@ -35,7 +35,8 @@ const {
     getByLng,
     createKey,
     updateIcon,
-    updateByLng
+    updateByLng,
+    deletedKey
 } = require("./languageDB.statics");
 
 languageSchema.statics.createLanguage = createLanguage;
@@ -43,6 +44,7 @@ languageSchema.statics.getByLng = getByLng;
 languageSchema.statics.createKey = createKey;
 languageSchema.statics.updateIcon = updateIcon;
 languageSchema.statics.updateByLng = updateByLng;
+languageSchema.statics.deletedKey = deletedKey
 
 const Language = mongoose.model('language',languageSchema);
 
