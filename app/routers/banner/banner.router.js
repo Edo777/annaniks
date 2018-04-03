@@ -37,7 +37,7 @@ router.get('/',                          getall);
 * @returns {object} 200 - An array of banner language isactive true info
 * @returns {Error}  default - Unexpected error
 */
-router.get('/@lng',                     getByLng);
+router.get('/:lng',                     getByLng);
 /**
  * @typedef Banner
  * @property {string} language.required

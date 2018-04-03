@@ -95,6 +95,7 @@ PortfolioSchema.statics.addGallery = addGallery;
 PortfolioSchema.pre('save', function () {
     this.image = ""
     this.tags = _.unique(this.tags);
+    this.platforms  = _.unique(this.platforms);
   });
 
 // PortfolioSchema.plugin(arrayUniquePlugin);

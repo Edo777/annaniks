@@ -27,7 +27,7 @@ module.exports = router;
 
 router.get('/',                          getall);
 router.post('/create',                   create);
-router.get('/@:lng',                     getByLng);
+router.get('/:lng',                     getByLng);
 router.put('/update/:id',                checkId, update);
 router.put('/updateimg/:id',             checkId,upload.single('file'), isImage,createImage);
 router.post('/create/image/:id',         checkId,upload.single('file'), isImage,createImage);

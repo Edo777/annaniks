@@ -19,12 +19,7 @@ const ServiceSchema = new mongoose.Schema({
     },
     language : {
         type : String,
-        validate : {
-            validator : function (lng) {
-                return ((lng.toLowerCase() == 'armenian') || (lng.toLowerCase() == 'russian') || (lng.toLowerCase() == 'england'));
-            },
-            message : "Language must be Correct..."
-        }
+        required : true
     },
     image : {
         type: String

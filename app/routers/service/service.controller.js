@@ -13,13 +13,13 @@ module.exports = {
 function getall(req, res) {
     Service.findAll()
         .then(resutt => res.status(200).send(resutt))
-        .catch(err => res.send(err));
+        .catch(err => res.status(400).send(err));
 }
 
 function getByLng(req, res) {
     Service.findByLanguage(req.params.lng)
         .then(result => res.send(result))
-        .catch(err => res.send(err));
+        .catch(err => res.status(400).send(err));
 }
 
 function create(req, res) {
@@ -29,7 +29,7 @@ function create(req, res) {
             res.send(_.pick(result, ['_id']));
         })
         .catch((error) => {
-            res.send(_.pick(error, ['name', 'message']));
+            res.status(200).send(_.pick(error, ['name', 'message']));
         })
 }
 
@@ -41,7 +41,7 @@ function createImage(req, res) {
                 message: "create succesful"
             })
         })
-        .catch(err => res.send(err));
+        .catch(err => res.status(400).send(err));
 }
 
 function update(req, res) {
@@ -50,7 +50,7 @@ function update(req, res) {
             name: "ok",
             message: "Update Succesfully"
         }))
-        .catch(err => res.send(err));
+        .catch(err => res.status(400).send(err));
 }
 
 function remove(req, res) {
@@ -67,5 +67,5 @@ function remove(req, res) {
             }
             )
         })
-        .catch((err) => res.send(err));
+        .catch((err) => res.status(400).send(err));
 }
