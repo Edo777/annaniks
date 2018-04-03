@@ -23,12 +23,6 @@ const PortfolioSchema = new Schema({
     },
     language : {
         type : String,
-        validate : {
-            validator : function (lng) {
-                return ((lng.toLowerCase() == 'armenian') || (lng.toLowerCase() == 'russian') || (lng.toLowerCase() == 'england'));
-            },
-            message : "Language must be Correct..."
-        },
         required : true
     },
     tags : [{
@@ -101,7 +95,6 @@ PortfolioSchema.statics.addGallery = addGallery;
 PortfolioSchema.pre('save', function () {
     this.image = ""
     this.tags = _.unique(this.tags);
-    console.log(this.tags+'++++++++++++++++')
   });
 
 // PortfolioSchema.plugin(arrayUniquePlugin);

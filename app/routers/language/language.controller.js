@@ -14,17 +14,19 @@ function createLanguage(req, res) {
         .then((result) => {
             res.sendStatus(200)
         }).catch((err) => {
-            res.send(err);
+            res.status(400).send({
+                message : 'duplicate key error'
+            });
         })
 }
 
 function getKeys(req, res) {
     Language.findOne({})
         .then((result) => {
-            res.send(result.keysTranslation)
+            res.status(200).send(result.keysTranslation)
         })
         .catch((err) => {
-            res.send(err);
+            res.status(400).send(err);
         })
 }
 
@@ -38,7 +40,7 @@ function getByLng(req, res) {
             }
         })
         .catch((err) => {
-            res.send(err);
+            res.status(400).send(err);
         })
 }
 
@@ -48,7 +50,7 @@ function createKey(req,res){
             res.send(result)
         })
         .catch((err)=>{
-            res.send(err);
+            res.status(400).send(err);
         })
 }
 
@@ -58,7 +60,7 @@ function updateIcon(req,res){
             res.send(result)
         })
         .catch((err)=>{
-            res.send(err)
+            res.status(400).send(err);
         })
 }
 
@@ -68,7 +70,7 @@ function updateByLng(req,res){
             res.send((result))
         })
         .catch((err)=>{
-            res.send(err);
+            res.status(400).send(err);
         })
 }
 
@@ -78,7 +80,7 @@ function deletedKey(req,res){
             res.send(result);
         })
         .catch((err)=>{
-            res.send(err);
+            res.status(400).send(err);
         })
 }
 
@@ -88,7 +90,7 @@ function deletedLng(req,res){
             res.send(result);
         })
         .catch((err)=>{
-            res.send(err);
+            res.status(400).send(err);
         })
 }
 
