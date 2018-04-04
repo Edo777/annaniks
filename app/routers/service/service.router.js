@@ -12,7 +12,8 @@ const {
     createImage,
     update,
     updateImg,
-    remove
+    remove,
+    findById
 } = require('./service.controller');
 
 const {
@@ -22,6 +23,7 @@ const {
 module.exports = router;
 // router.use('/create/image/:id',checkId, upload.single('file'), isImage)
 router.get('/',                          getall);
+router.get('/getone/:id',      checkId,findById)
 router.post('/create',                   create);
 router.get('/:lng',                     getByLng);
 router.delete('/delete/:id' ,            checkId,remove);

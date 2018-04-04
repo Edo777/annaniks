@@ -9,7 +9,18 @@ module.exports = {
     create,
     createImage,
     update,
-    remove
+    remove,
+    findById
+}
+
+function findById(req,res){
+    Banner.findOne({_id:req.params.id})
+        .then((result)=>{
+            res.status(200).send(result);
+        })
+        .catch((err)=>{
+            res.status(400).send(err);
+        })
 }
 
 function getall(req, res) {
@@ -47,7 +58,6 @@ function createImage(req, res) {
 }
 
 function update(req, res) {
-    console.log(req.params.id)
     Banner.findOneAndUpdate({_id :req.params.id}, req.body, { runValidators: true })
         .then(result => res.send({
             result :result,
