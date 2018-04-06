@@ -2,6 +2,7 @@ const { Staff } = require("./model");
 const _ = require("lodash");
 const PATH = require('path');
 const fs = require("fs");
+const { Language } = require('../language/model');
 
 module.exports = {
     getall,
@@ -26,13 +27,21 @@ function getByLng(req, res) {
 
 function create(req, res) {
     let staff = req.body;
-    Staff.create(staff)
-        .then((result) => {
-            res.send(_.pick(result, ['_id']));
-        })
-        .catch((error) => {
-            res.send(_.pick(error, ['name', 'message']));
-        })
+    req.body.localization = []
+    Language.findOne({}).then((result) => {
+        for (const iterator of result.localization) {
+            req.body.localization.push({ language: iterator.language })
+        }
+        Staff.create(staff)
+            .then((result) => {
+                res.send(_.pick(result, ['_id']));
+            })
+            .catch((error) => {
+                res.send(_.pick(error, ['name', 'message']));
+            })
+    }).catch((error) => {
+        res.send(_.pick(error, ['name', 'message']));
+    })
 }
 
 function createImage(req, res) {
@@ -48,18 +57,18 @@ function update(req, res) {
     delete req.body.localization
     let objLocalization = {};
     (req.body.name) ? req.body[`localization.$.name`] = req.body.name : false;
-    (req.body.rol) ? req.body[`localization.$.rol`] = req.body.rol : false;    
+    (req.body.rol) ? req.body[`localization.$.rol`] = req.body.rol : false;
     if (req.body.language) {
         Staff.update({ _id: req.params.id, "localization.language": req.body.language },
             {
-                $set:req.body
+                $set: req.body
             }).then((result) => {
                 res.send(result)
             }).catch((err) => {
                 res.send(err);
             })
     } else {
-        Staff.findOneAndUpdate({_id:req.params.id}, req.body, { runValidators: true })
+        Staff.findOneAndUpdate({ _id: req.params.id }, req.body, { runValidators: true })
             .then(result => res.send({
                 name: "ok",
                 message: "Update Successfully"
