@@ -10,8 +10,27 @@ module.exports = {
     create,
     createImage,
     update,
-    remove
+    remove,
+    getAllLanguage
 }
+
+
+function getAllLanguage(req,res){
+    Language.findOne({})
+        .then((result=>{
+            let listLAnguage = []
+            for (const iterator of result.localization) {
+                if(iterator['deleted'] === false){
+                    listLAnguage.push(iterator['language'])
+
+                }            }
+            res.send(listLAnguage)
+        }))
+        .catch((err)=>{
+            res.status(400).send(err)
+        })
+}
+
 
 function getall(req, res) {
     Staff.findAll()

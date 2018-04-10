@@ -11,7 +11,8 @@ const {
     createImage,
     update,
     updateImg,
-    remove
+    remove,
+    getAllLanguage
 } = require('./staff.controller');
 
 const {
@@ -21,6 +22,7 @@ const {
 module.exports = router;
 // router.use('/create/image/:id',checkId, upload.single('file'), isImage)
 router.get('/',                          getall);
+router.get('/language',          getAllLanguage);
 router.post('/create',                   create);
 router.get('/:lng',                     getByLng);
 router.delete('/delete/:id' ,            checkId,remove);
