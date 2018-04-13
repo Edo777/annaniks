@@ -35,5 +35,3 @@ mongoose.connect(URL, { poolSize: 10 })
     .catch(() => {
         return console.log("Server dont connect and i cant listen to port");
     })
-
-
