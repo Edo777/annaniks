@@ -14,9 +14,19 @@ module.exports = {
     removeTags,
     removePlatform,
     removeGallery,
-    addGallery
+    addGallery,
+    getById
 }
 
+function getById(req,res){
+    Portfolio.findOne({_id:req.params.id})
+        .then((result)=>{
+            res.send(result)
+        })
+        .catch((err)=>{
+            res.status(400).send(err)
+        })
+}
 function getall(req, res) {
     Portfolio.findAll()
         .then(resutt => res.status(200).send(resutt))

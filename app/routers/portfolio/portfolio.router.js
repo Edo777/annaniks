@@ -15,7 +15,8 @@ const {
     removeTags,
     removePlatform,
     removeGallery,
-    addGallery
+    addGallery,
+    getById
 } = require('./portfolio.controller');
 
 const {
@@ -26,6 +27,7 @@ const {
 module.exports = router;
 
 router.get('/',                          getall);
+router.get('/getById/:id',      checkId,getById);
 router.post('/create',                   create);
 router.get('/:lng',                     getByLng);
 router.put('/update/:id',                checkId, update);

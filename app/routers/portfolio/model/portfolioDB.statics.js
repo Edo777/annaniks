@@ -66,6 +66,7 @@ const addGallery = function(id,req){
     const gallery = req.body;
     const Portfolio = this;
     gallery['images'] = [];
+    console.log(req)
     
     _.forIn(req.files,(val,key)=>{
         gallery.images.push(val.filename)
