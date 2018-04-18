@@ -34,7 +34,7 @@ router.put('/update/:id',                checkId, update);
 router.put('/updateimg/:id',             checkId,upload.single('file'), isImage,createImage);
 router.post('/create/image/:id',         checkId,upload.single('file'), isImage,createImage);
 router.post('/creategallery/:id',        checkId,upload.array('file', 12),checkFileEmpty,isImage,addGallery);
-router.delete('/delete/gallery/:gallery',checkId,removeGallery);
+router.delete('/delete/gallery/:id',checkId,removeGallery);
 router.delete('/delete/platform/:id',    removePlatform);
 router.delete('/delete/tags/:id',        removeTags);
 router.delete('/delete/:id' ,            checkId,remove);

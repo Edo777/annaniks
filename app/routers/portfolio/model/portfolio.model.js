@@ -15,7 +15,7 @@ const PortfolioSchema = new Schema({
     description : {
         type :String,
         required : true,
-        minlength : 20
+        minlength : 5
     },
     isActive : {
         type : Boolean,
@@ -57,16 +57,9 @@ const PortfolioSchema = new Schema({
             message : "id must be platform idi"
         }
     }],
-    gallery :[{
-        images : {
-            type :Array,
-            required:true
-        },
-        isActive : {
-            type : Boolean,
-            required:true
-        }
-    }],
+    gallery : {
+        type : Array
+    },
     image : {
         type: String,
     }
@@ -93,7 +86,8 @@ PortfolioSchema.statics.removeGallery = removeGallery;
 PortfolioSchema.statics.addGallery = addGallery;
 
 PortfolioSchema.pre('save', function () {
-    this.image = ""
+    this.image = "";
+    this.gallery = [];
     this.tags = _.unique(this.tags);
     this.platforms  = _.unique(this.platforms);
   });

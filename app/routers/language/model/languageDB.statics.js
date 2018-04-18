@@ -5,6 +5,46 @@ const fs = require('fs');
 const PATH = require('path');
 const _ = require('lodash');
 
+function updateLanguageName(req) {
+    const Language = this;
+    const oldLanguage = req.params.lng;
+    const newLanguage = req.body.newLanguage;
+    return new Promise((resolve, reject) => {
+        ServiceDescription.update({ language: oldLanguage }, {
+            $set: { language: newLanguage }
+        }).then((result) => {
+                Language.update({ 'localization.language': oldLanguage }, {
+                    $set: { 'localization.$.language': newLanguage },
+                }, { runValidators: true }).catch((err) => {
+                    reject({
+                        "lng": err
+                    });
+                })
+
+                Email.update({'localization.language': oldLanguage }, {
+                    $set: { 'localization.$.language': newLanguage },
+                }, { runValidators: true }).catch((err) => {
+                    reject({
+                        "email": err
+                    });
+                })
+                Staff.update({'localization.language': oldLanguage}, {
+                    $set: { 'localization.$.language': newLanguage }
+                }, { multi: true }).catch((err) => {
+                    reject({
+                        "staff": err
+                    });
+                }).then((result)=>{
+                    resolve('ok')
+                })
+            })
+            .catch((err) => {
+                reject({
+                    "ser-des": err
+                })
+            })
+    })
+}
 function createLanguage(lng) {
     const Language = this;
     return new Promise((resolve, reject) => {
@@ -114,12 +154,18 @@ function updateByLng(object, lng) {
                 }
             }
         ], (err, res) => {
+            if (res[0].localization[0].translates === undefined) {
+                res[0].localization[0].translates = {};
+            }
             let oldTranstale = {} = res[0].localization[0].translates;
             _.mapKeys(oldTranstale, (value, key) => {
                 if (object.translates[key] != undefined) {
                     oldTranstale[key] = object.translates[key]
                 }
             })
+            if (object.isActeve == undefined) {
+                object.isActeve = res[0].localization[0].isActive;
+            }
             Language.update({ 'localization.language': lng }, {
                 $set: { 'localization.$.isActive': object.isActeve, 'localization.$.translates': oldTranstale }
             }).then((result) => {
@@ -159,7 +205,11 @@ function updateIcon(lng, file) {
         ], (err, res) => {
             let icon = res[0].localization[0].icon;
             if (icon) {
-                fs.unlink(PATH.join(__dirname, '..', '..', 'static', 'imgs', icon), function (err) { });
+                fs.stat(PATH.join(__dirname, '..', '..', 'static', 'imgs', icon), function (err, stat) {
+                    if (err == null) {
+                        fs.unlinkSync(PATH.join(__dirname, '..', '..', 'static', 'imgs', icon));
+                    }
+                });
             }
             Language.update({ 'localization.language': lng }, {
                 $set: { 'localization.$.icon': file.filename }
@@ -218,5 +268,6 @@ module.exports = {
     updateIcon,
     updateByLng,
     deletedKey,
-    deletedLng
+    deletedLng,
+    updateLanguageName
 }

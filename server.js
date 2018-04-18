@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 //dev dependencies
 const PORT = process.env.PORT || 3000;
 const URL = "mongodb://annaniks:annaniks@ds121189.mlab.com:21189/annaniks";
+//const URL = "mongodb://localhost:27017/annaniks";
 const morgan = require("morgan");
 const app = express();
 const API = require("./app").API;

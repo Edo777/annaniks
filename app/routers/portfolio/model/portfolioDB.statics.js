@@ -34,7 +34,11 @@ const createImageById = function (portfolioId, image) {
             return Portfolio.findOneAndUpdate({ _id: portfolioId }, { $set: { image: path } })
                 .then((result) => {
                     if (result.image) {
-                        fs.unlinkSync(result.image);
+                        fs.stat(PATH.join(__dirname, '..', '..','static', 'imgs', result.image), function(err, stat) {
+                            if(err == null){
+                                fs.unlinkSync(PATH.join(__dirname, '..', '..','static', 'imgs', result.image));
+                            }
+                         });   
                     } else {
                         console.log("this is 1");
                     }
@@ -63,26 +67,24 @@ const removeTags = function(value){
 
 const addGallery = function(id,req){
     req.body.images = '';
-    const gallery = req.body;
+    const gallery = [];
     const Portfolio = this;
-    gallery['images'] = [];
-    console.log(req)
-    
     _.forIn(req.files,(val,key)=>{
-        gallery.images.push(val.filename)
+        gallery.push(val.filename)
     })
-
     return Portfolio.update({_id:id},{$push:{'gallery':gallery}},{runValidators: true});
 }
 
-const removeGallery = function(id,idGallery){
+const removeGallery = function(id,value){
     const Portfolio = this;
-    return Portfolio.findOneAndUpdate({_id:id},{$pull: { 'gallery':{_id: idGallery}}},{multi : true},(err,result)=>{
-        let listImg = _.find(result.gallery, {'isActive': true}).images;
+    return Portfolio.findOneAndUpdate({_id:id},{$pull: { 'gallery':{$in:[value]}}},{multi : true},(err,result)=>{
+        let listImg = result.gallery;
         let length = listImg.length;
-        for(let i = 0;i < length;i++){
-            fs.unlinkSync((PATH.join(__dirname,'../','../','static','imgs',listImg[i])));
-        }
+        fs.stat(PATH.join(__dirname, '..', '..','static', 'imgs', value), function(err, stat) {
+           if(err == null){
+               fs.unlinkSync(PATH.join(__dirname, '..', '..','static', 'imgs', value));
+           }
+        });   
     }) 
 }
 

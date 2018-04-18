@@ -100,7 +100,11 @@ function remove(req, res) {
     Staff.findByIdAndRemove({ _id: req.params.id })
         .then((result) => {
             if (result.image) {
-                fs.unlinkSync(PATH.join(__dirname, '..', '..', 'routers', 'static', 'imgs', result.image));
+                fs.stat(PATH.join(__dirname, '..', '..','static', 'imgs', result.image), function(err, stat) {
+                    if(err == null){
+                        fs.unlinkSync(PATH.join(__dirname, '..', '..','static', 'imgs', result.image));
+                    }
+                 }); 
             } else {
                 console.log("this is 1");
             }

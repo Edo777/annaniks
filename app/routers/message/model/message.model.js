@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const URL = "mongodb://annaniks:annaniks@ds121189.mlab.com:21189/annaniks"; 
-
+//const URL = "mongodb://localhost:27017/annaniks";
 mongoose.connect(URL);
 
 const messageShcema = new mongoose.Schema({

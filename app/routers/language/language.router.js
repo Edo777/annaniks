@@ -14,7 +14,8 @@ const {
     updateIcon,
     updateByLng,
     deletedKey,
-    deletedLng
+    deletedLng,
+    updateLanguageName
 } = require('./language.controller');
 
 const {
@@ -28,6 +29,7 @@ router.post('/create',                   createLanguage);
 router.post('/create/key',                    createKey);
 router.put('/updateicone/:lng',checkLng,upload.single('file'),isImage,updateIcon);
 router.put('/update/language/:lng',checkLng,updateByLng);
+router.put('/updateLanguageName/:lng',checkLng,updateLanguageName);
 router.delete('/deletelng/:lng',    checkLng,deletedLng);
 router.delete('/delete/key',                 deletedKey);
 

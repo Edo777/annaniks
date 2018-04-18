@@ -94,6 +94,17 @@ function deletedLng(req,res){
         })
 }
 
+function updateLanguageName(req,res){
+    Language.updateLanguageName(req)
+        .then((result)=>{
+            res.status(200).send('ok')
+        })
+        .catch((err)=>{
+            res.status(400).send({
+                message : 'duplicate key error'
+            });;
+        })
+}
 
 module.exports = {
     getAll,
@@ -104,5 +115,6 @@ module.exports = {
     updateIcon,
     updateByLng,
     deletedKey,
-    deletedLng
+    deletedLng,
+    updateLanguageName
 }
