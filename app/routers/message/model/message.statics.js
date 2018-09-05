@@ -11,7 +11,7 @@ function getByIndexAndCount(index,count){
           subject : 1,
           message : 1,
           senderName :1,
-          _id:0 
+          _id:1
         }).skip(index).limit(count)
 }
 

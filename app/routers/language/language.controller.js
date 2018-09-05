@@ -1,9 +1,32 @@
 const { Language } = require('./model');
 
 function getAll(req, res) {
-    Language.findOne({})
+    console.log('----------------------------')
+    Language.aggregate([
+        {
+           $project: {
+            localization: {
+                 $filter: {
+                    input: "$localization",
+                    as: "localization",
+                    cond: { $eq: [ "$$localization.deleted", false ] }
+                 }
+              }
+           }
+        }
+     ])
         .then((result) => {
-            res.send(result)
+            Language.findOne({}).then((newResult)=>{
+                console.log(result)
+                newResult.localization = result[0].localization
+                if(result[0].localization.length){
+                    res.send(newResult);  
+                }else{
+                    res.sendStatus(404)
+                }
+            }).catch((childErr)=>{
+                res.sendStatus(500);
+            })
         }).catch((err) => {
             res.sendStatus(500);
         })
