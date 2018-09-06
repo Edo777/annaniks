@@ -98,7 +98,8 @@ function updateByLng(req,res){
 }
 
 function deletedKey(req,res){
-    Language.deletedKey(req.body.key)
+    console.log(req.params.key,'params')
+    Language.deletedKey(req.params.key)
         .then((result)=>{
             res.send(result);
         })

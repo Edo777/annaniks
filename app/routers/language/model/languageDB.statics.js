@@ -121,9 +121,9 @@ function createKey(key) {
                     if (item['translates'] === undefined) {
                         item['translates'] = {}
                     }
-                    for (const proprty of key) {
-                        item['translates'][proprty] = ""
-                    }
+                   
+                    item['translates'][key] = ""
+                    
                     Language.update({ 'localization.language': item.language }, {
                         $set: { 'localization.$.translates': item.translates }
                     }).then(() => {
@@ -225,21 +225,24 @@ function updateIcon(lng, file) {
 }
 
 function deletedKey(key) {
+    console.log(key,'keyyyyyyyyy')
     const Language = this;
+    let keys = [key]
     return new Promise((resolve, reject) => {
         Language.findOneAndUpdate({}, {
-            $pull: { keysTranslation: { $in: key } }
+            $pull: { keysTranslation: { $in: keys } }
         }, (err, result) => {
             if (err) {
-                console.log('err')
+                console.log(err)
+                reject(err);
             } else {
                 for (const item of result.localization) {
                     if (item['translates'] === undefined) {
                         item['translates'] = {}
                     }
-                    for (const proprty of key) {
-                        delete item['translates'][proprty]
-                    }
+               
+                    delete item['translates'][keys[0]]
+                    
 
                     Language.update({ 'localization.language': item.language }, {
                         $set: { 'localization.$.translates': item.translates }
